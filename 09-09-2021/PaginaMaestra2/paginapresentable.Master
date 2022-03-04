@@ -1,0 +1,58 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="paginapresentable.master.cs" Inherits="biotech.PaginaMaestra2.paginapresentable" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <link rel="stylesheet" href="iconos/css/fontello.css">
+    <link rel="stylesheet" href="css/estilos.css">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <header>
+        <div class="content-menu">
+            <input type="checkbox" id="check">
+            <label class="icon-menu" for="check"></label>
+            <h2>Biotech Corp</h2>
+            <img src="../images/logobio.png">
+            <nav class="menu">
+                <ul>
+                    <li><a href="#"><span class="icon-home"></span>Inicio</a></li>
+                    
+                    <li><a href="../vendedor/Default.aspx"><span class="icon-product"></span>Cotización</a></li>
+                    <li><a href="../vendedor/Realizarcotizacion.aspx"><span class="icon-blog"></span>Generar Orden</a></li>
+                    <li><a href="../vendedor/cliente.aspx"><span class="icon-contacts"></span>Cliente</a></li>
+                    <li><a href="../vendedor/pedidosgenerados.aspx"><span class="icon-contacts"></span>Ventas Realizadas</a></li>
+                    <li><a href="../informe/ordendeventa.aspx"><span class="icon-contacts"></span>INFORME ORDEN REALIZADA</a></li>
+                    <li><a href="../Default.aspx"><span class="icon-service"></span>SALIR</a></li>
+
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        
+        
+<form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+
+
+    </main>
+    
+    <script src="js/jquery.js"></script>
+    <script src="js/script.js"></script>
+
+
+    
+</body>
+</html>

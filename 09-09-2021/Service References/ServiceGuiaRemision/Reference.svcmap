@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="fc4fa34e-c401-4686-8fcc-1c02f137f728" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://e-beta.sunat.gob.pe/ol-ti-itemision-guia-gem-beta/billService?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="billService.wsdl" MetadataType="Wsdl" ID="3938f76b-a5b6-45cb-be5f-d148dbce6c79" SourceId="1" SourceUrl="https://e-beta.sunat.gob.pe/ol-ti-itemision-guia-gem-beta/billService?wsdl" />
+    <MetadataFile FileName="billService.xsd" MetadataType="Schema" ID="6c67ba16-e85a-43b4-985c-af15e478797f" SourceId="1" SourceUrl="https://e-beta.sunat.gob.pe/ol-ti-itemision-guia-gem-beta/billService.xsd2.xsd" />
+    <MetadataFile FileName="billService1.wsdl" MetadataType="Wsdl" ID="48b71ecb-ef25-4f7a-a4c9-f5a5b1654082" SourceId="1" SourceUrl="https://e-beta.sunat.gob.pe/ol-ti-itemision-guia-gem-beta/billService?ns1.wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,116 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="vendedor.master.cs" Inherits="biotech.VentasRTC.vendedor" %>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Biotech</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+<link href="css/twoColLiqLtHdr.css" rel="stylesheet" type="text/css" /><!--[if lte IE 7]>
+<style>
+.content { margin-right: -1px; } /* this 1px negative margin can be placed on any of the columns in this layout with the same corrective effect. */
+ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it needs to correct extra whiltespace between the links */
+</style>
+<![endif]-->
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  
+      <link rel="stylesheet" href="css/style.css">
+
+<style type="text/css">
+body,td,th {
+	font-family: Lato, Helvetica, Arial;
+}
+body {
+	background-color: #dddedf;
+}
+a:link {
+	color: #678825;
+}
+a:visited {
+	color: #678825;
+}
+
+
+
+
+* {
+margin:0;
+padding:0;
+}
+
+#container{
+width: 100%;
+
+
+}
+
+#columna_izq{
+float: left;
+width: 50%;
+
+height: inherit;
+}
+
+#columna_der{
+float: left;
+widht:50%;
+height: inherit;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="header"><a href="#">  <p><img src="../images/logobiotech.jpg" alt="Insert Logo Here" name="Insert_logo" width="200" height="100" align="absmiddle" id="Insert_logo" style="background: #ffffff; display:block;" /></p></a> 
+    <!-- end .header --></div>
+    <hr />
+  <div class="sidebar1">
+    
+    <ul>
+    <li class="dropdown">
+      <input type="checkbox" />
+      <a href="#" data-toggle="dropdown">PROYECCION</a>
+      <ul class="dropdown-menu">
+        <li><a href="registrarproyectado.aspx">Reg. proyección</a></li>
+      </ul>
+    </li>
+   
+   <%-- <li class="dropdown">
+      <input type="checkbox" />
+      <a href="#" data-toggle="dropdown">INFORMES</a>
+      <ul class="dropdown-menu">
+        <li><a href="rtc_ventas.aspx">Ventas Realizadas</a></li>
+            
+      
+      </ul>
+    </li>--%>
+
+     
+
+        
+         <li class="dropdown">
+      <input type="checkbox" />
+      <a href="../VentasRTC/Default.aspx" data-toggle="dropdown">Retornar</a>
+     
+    </li>
+  </ul>
+    
+    
+    </div>
+  <div class="content">
+    <form id="form1" runat="server">
+    
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+   
+    </form>
+</div>
+  <div class="footer">
+   </div>
+  <!-- end .container --></div>
+</body>
+</html>

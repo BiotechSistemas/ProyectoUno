@@ -1,0 +1,331 @@
+/* Responsive
+============================================*/
+#slides{height: 440px;}
+/* Screen mayor a 1200px */
+@media (min-width: 1200px) {
+  #slides .carousel-inner > .item > img{
+    height: 100%;
+  }
+  #user-menu{ margin-right: 5px; }
+
+
+}
+
+/* Screen Desktop 960 */
+@media (min-width: 768px) and (max-width: 979px) {
+  #slides .carousel-inner > .item > img{
+    height: 100%;
+  }
+
+
+  /*Sarch Job*/
+  #searchJob .chzn-container{
+    width: 100% !important;
+  }
+
+  #searchJob .checkbox{
+    font-size: 12px;
+  }
+  #searchJob .btn-link {
+    display: block;
+    float: none;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+  }
+
+  /* CV */
+  .cv-details .cv-user{
+    /*text-align: center;
+    margin-bottom: 14px;*/
+  }
+  .cv-details .cv-user h2{font-size: 24px; }
+  .cv-details .cv-user h3{font-size: 16px; }
+
+  /* CV PDF */
+
+  .cv-pdf .cv-area .title{  font-size: 1.2em;  }
+  .cv-pdf .cv-details h1,
+  .cv-pdf .cv-details h2{font-size: 24px; margin: 0;}
+  .cv-pdf .cv-details h3{ font-size: 20px;}
+
+
+
+}
+
+/* Tablet */
+@media (max-width: 767px) {
+  /* HOME */
+  #slides .carousel-inner > .item > img{
+    height: auto;
+  }
+
+  .login-form{
+    margin-bottom: 16px;
+  }
+
+  #filter .span4{
+    position: relative;
+    padding-bottom: 0px;
+    padding-top: 10px;
+    float:none;
+  }
+  #filter .section{
+    margin: 15px 20px 0 20px;
+  }
+
+
+
+    /* CV */
+    .cv-details .cv-user{
+        text-align: center;
+        margin-bottom: 14px;
+    }
+    .cv-details .cv-user h2{font-size: 20px; margin-bottom: 10px; }
+    .cv-details .cv-user h3{font-size: 16px; }
+
+    .cv-form-head .pull-left,
+    .cv-form-head .pull-right ,
+    .name-cv .pull-left,
+    .name-cv .pull-right{
+        float: none;
+        display: block;
+    }
+
+    .cv-form-head .pull-right,
+    .name-cv .pull-right{
+        text-align: center;
+    }
+
+
+    .lista-postula .form-inline.pull-right,
+    .lista-postula .pull-left{
+      float: none;
+    }
+    .lista-postula .form-inline .span2{
+      width: 104px;
+      display: inline-block;
+    }
+
+    /* CV PDF */
+  .cv-pdf .cv-area .area-name {
+    background: #964545;
+    border:none;
+    height: auto;
+    /*border-bottom: none;*/
+    /*padding-bottom: 2px;*/
+  }
+
+  .cv-pdf .cv-area .title{
+    display: block;
+    width: 100%;
+    position: relative;
+    line-height: 1em;
+    padding: 8px 10px 8px 10px;
+  }
+
+  /* CV-PDF */
+  .cv-pdf .cv-details hgroup{
+    text-align: left;
+    padding-bottom: 0;
+  }
+
+  .cv-pdf .cv-details .cv-infocontacto i{
+    margin: 3px 10px;
+  }
+
+
+  .cv-pdf .cv-area .text h5{
+    font-size: 1.2em;
+  }
+
+  .cv-pdf .cv-area .text h5.pull-left,
+  .date.pull-right{
+    float:none;
+    margin-bottom: 0;
+  }
+
+  .date.pull-right{
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  /* CV PDF */
+  .cv-pdf .cv-wrap{ border-left-width: 30px;}
+  .cv-pdf .cv-details hgroup { width: 60%;}
+  .cv-pdf .cv-details h1,
+  .cv-pdf .cv-details h2{font-size: 20px; margin: 0;}
+  .cv-pdf .cv-details h3{font-size: 18px; }
+
+  .cv-pdf .cv-details .logo{ margin: 0 10px 0 0; }
+
+  #collapseStudies #id_started_year,
+  #collapseStudies #id_started_month,
+  #collapseStudies #id_finished_year,
+  #collapseStudies #id_finished_month{
+    width: 20%; float: left;
+    margin-right: 16px;
+  }
+
+  /* Company */
+  .company .form-container .form-horizontal{       }
+  .company .form-container .form-horizontal .offset2,
+  .admin .form-container .offset2{   margin-left: 0; padding: 0 20px; }
+  .company .form-container .form-horizontal fieldset legend{
+    /*margin-left: -20px;
+    margin-right: -20px;*/
+  }
+
+  .admin .form-container .control{
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9e9e9;
+  }
+
+}
+
+/* Desktop mayor a 960px  */
+@media (max-width: 979px) {
+
+/* Nabar */
+
+    /* Nav-collapse */
+    .nav-collapse .nav > li > a,
+    .nav-collapse .dropdown-menu a{
+        /*color:#f6f6f6;*/
+        *color:#333;
+    }
+
+    .nav-collapse .nav > li > a:hover,
+    .nav-collapse .dropdown-menu a:hover {
+        color:#333;
+        text-shadow:none;
+    }
+
+    .nav-collapse .nav li.dropdown > a:hover .caret{
+        border-top-color: #770b27;
+        border-bottom-color: #770b27;
+    }
+
+    .nav-collapse .dropdown-menu .active > a,
+    .nav-collapse .dropdown-menu .active > a:hover{
+        color: #fff;
+    }
+
+    #user-menu{
+        margin-right: 5px;
+    }
+    /* Content */
+    #wrapper{
+        margin-top: -20px;
+    }
+
+    .cv-pdf .cv-area .area-name {
+      /*border-bottom: none;*/
+      /*padding-bottom: 2px;*/
+    }
+
+    .cv-pdf .cv-area .title{
+
+    }
+
+    /*.cv-pdf .cv-area .title{
+      height: auto;
+      position: relative;
+     top:2px;
+     line-height: 1.2em;
+     padding: 6px;
+    }*/
+
+
+}
+
+/*@media (min-width: 980px) {}*/
+
+/* Smartphones */
+@media (max-width:480px){
+  #BolsaTrabajo-btnVerMasOfertas{
+      margin-bottom: 3%;
+  }
+
+  #slides{height: auto;}
+  #slides .carousel-inner > .item > img{
+    height: 260px;
+  }
+
+  .hide-row{
+    display: none;
+  }
+
+  .cv-section .head {
+    text-align: center;
+  }
+  .cv-section .head .pull-left,
+  .cv-section .head .pull-right{
+    float: none;
+
+  }
+
+
+  .cv-details .cv-user{
+    text-align: center;
+    margin-bottom: 14px;
+  }
+
+  .cv-details .cv-user h2{font-size: 16px; margin-bottom: 10px; }
+  .cv-details .cv-user h3{font-size: 12px; }
+
+
+  /* Offer */
+    .offer-time{
+      text-align: left;
+    }
+    .company-favorite{
+      float: none;
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .control-label span.required{
+      position: relative;
+      top: 2px;
+      right: 0;
+    }
+
+  #footer{
+    text-align: center;
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+  #footer .aright{
+    text-align: center;
+  }
+
+  /*  CV PDF */
+  .cv-pdf .cv-area .area-name {
+    /*border-bottom: none;*/
+    height: auto;
+
+  }
+  .cv-pdf .cv-area .title{
+    position: relative;
+    font-size: 1em;
+    line-height: 1em;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+  .cv-pdf .cv-details .logo{
+    width: 25%;
+  }
+  .cv-pdf .cv-details h1,
+  .cv-pdf .cv-details h2{font-size: 16px; margin: 0; }
+  .cv-pdf .cv-details h3{font-size: 14px; }
+
+  /* Offer */
+  .success-offer{
+    margin: 30px 0;
+  }
+  .alert .pull-right.btn-info{
+    float:none;
+  }
+
+}

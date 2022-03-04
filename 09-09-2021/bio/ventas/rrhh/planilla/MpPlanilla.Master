@@ -1,0 +1,235 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MpPlanilla.master.cs" Inherits="biotech.bio.ventas.rrhh.planilla.MpPlanilla" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+
+
+     <link rel="icon" type="image/png" href="http://www.biotechcorp.com.pe/webapp/logoicono.png" />
+    <link href="../../../vendorF/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <script src="../../../vendorF/bootstrap/js/bootstrapv3-4.min.js"></script>
+    <title></title>
+    <style>
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+</style>
+
+
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+
+  
+
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">
+          <asp:Image ID="Image1" runat="server" ImageUrl="~/images/logobiotech.png" Height="30px" Width="60px" />
+      </a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+       <%-- <li class="active"><a href="#">Home</a></li>--%>
+
+         <li class="dropdown">
+             <asp:LinkButton ID="lbtnMPlanilla" class="dropdown-toggle" data-toggle="dropdown" runat="server">Planilla <span class="caret"></asp:LinkButton>
+          
+          <ul class="dropdown-menu">
+
+              <li class="dropdown-submenu">
+            <a class="test" href="#">Remuneración<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+               <li>  <asp:LinkButton ID="m21" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/RemuneracionBruta.aspx">Calcular Planilla</asp:LinkButton></li>
+              <li>  <asp:LinkButton ID="m22" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/PanillaRemuneracion.aspx">Planilla de Remuneraciones</asp:LinkButton></li>
+            </ul>
+          </li>
+
+                <li class="divider"></li>
+           
+                <li class="dropdown-submenu">
+            <a class="test" href="#">Gratificación<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                 <li><a href="GratificacionCalc.aspx">Planilla Gratificación</a></li>
+                <li><a href="GratificacionBoleta.aspx">Gratificación Boletas</a></li>
+                 </ul>
+          </li>
+
+               
+                   
+              
+
+           <li class="dropdown-submenu">
+                <a class="test" href="#">CTS<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="CTScalc.aspx">CTS Planilla</a></li>
+                    <li><a href="CTSresumen.aspx">CTS Resúmen</a></li>
+                </ul>
+          </li>
+                <li class="divider"></li>
+              <li class="dropdown-submenu">
+                <a class="test" href="#">Vacaciones<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <asp:LinkButton ID="lbtnVacacionesResumen" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/ResumenVacacional.aspx">Resumen Vacacional</asp:LinkButton></li>
+                   
+                    
+                  
+                </ul>
+          </li>
+
+              
+          </ul>
+        </li>
+
+<%--          <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cálculos <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+           
+            
+              <li>  <asp:LinkButton ID="LinkButton3" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/QuintaCategoria.aspx">Vacaciones</asp:LinkButton></li>
+              <li class="divider"></li>
+           
+
+              <li><a tabindex="-1" href="#">Vacaciones</a></li>
+      <li class="dropdown-submenu">
+        <a class="test" tabindex="-1" href="#">New dropdown <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+          <li class="dropdown-submenu">
+            <a class="test" href="#">Another dropdown <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">3rd level dropdown</a></li>
+              <li><a href="#">3rd level dropdown</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+              </ul>
+              <%--<li class="divider"></li>--%>
+               
+             <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Comisión <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+           
+              <li>  <asp:LinkButton ID="LinkButton2" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/comisionListado.aspx">Tabla de comisiones</asp:LinkButton></li>
+              <li class="divider"></li>
+              <%--<li>  <asp:LinkButton ID="LinkButton3" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/QuintaCategoria.aspx">Renta 5ta Categoria</asp:LinkButton></li>--%>
+              
+            
+              
+            
+          </ul> 
+                 </li>
+             
+
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Descuentos <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+           
+              <li>  <asp:LinkButton ID="lbtnRetenciones" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/Retenciones.aspx">Descuentos de Ley</asp:LinkButton></li>
+              <li class="divider"></li>
+              <li>  <asp:LinkButton ID="lbtn5categoria" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/QuintaCategoria.aspx">Renta 5ta Categoria</asp:LinkButton></li>
+              <li class="divider"></li>
+           <li>  <asp:LinkButton ID="lbtnDescuentos" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/DescuentoAdmin.aspx">Descuentos Internos</asp:LinkButton></li>
+           <li>  <asp:LinkButton ID="lbtnEps" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/RegDescuentos.aspx">Descuentos EPS</asp:LinkButton></li>
+              <%--<li class="divider"></li>--%>
+               
+            
+              </li>
+              
+            
+          </ul>
+
+         <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Personal <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+                <li>  <asp:LinkButton ID="lbtnfaltas" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/Inasistencias.aspx">Control de Asistencia</asp:LinkButton></li>
+                
+
+
+         
+          </ul>
+        </li>
+
+
+         <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+
+           <li>  <asp:LinkButton ID="lbPersonalAdmin" runat="server" PostBackUrl="~/bio/ventas/rrhh/Default.aspx">Administrar personal</asp:LinkButton></li>
+               <li class="divider"></li>
+               <li>  <asp:LinkButton ID="LinkButton1" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/Remuneracion.aspx">Remuneración</asp:LinkButton></li>
+              <li><a href="../Administracion/Contratos.aspx">Registrar Contratos</a></li>
+          </ul>
+        </li>
+
+
+   
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+       <%-- <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>--%>
+        <%--<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>--%>
+         <li> <asp:LinkButton ID="lbtnSalir" runat="server" OnClick="lbtnSalir_Click">Salir</asp:LinkButton></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+
+      <!-- Main component for a primary marketing message or call to action -->
+     
+
+     <!-- /container -->
+
+
+
+        
+    
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-submenu a.test').on("click", function (e) {
+                $(this).next('ul').toggle();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+        });
+</script>
+</body>
+
+</html>

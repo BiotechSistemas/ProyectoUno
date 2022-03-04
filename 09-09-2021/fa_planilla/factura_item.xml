@@ -1,0 +1,33 @@
+﻿<cac:InvoiceLine>
+  <cbc:ID>{{item_id}}</cbc:ID>
+  <cbc:InvoicedQuantity unitCode="NIU">{{item_cantidad}}</cbc:InvoicedQuantity>
+  <cbc:LineExtensionAmount currencyID="{{moneda}}">{{item_cantxprecio}}</cbc:LineExtensionAmount>
+  <!--<cac:PricingReference>-->
+    <cac:AlternativeConditionPrice>
+      <cbc:PriceAmount currencyID="{{moneda}}">{{item_noseval}}</cbc:PriceAmount>
+      <cbc:PriceTypeCode>01</cbc:PriceTypeCode>
+    </cac:AlternativeConditionPrice>
+  </cac:PricingReference>
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="{{moneda}}">{{item_igv}}</cbc:TaxAmount>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="{{moneda}}">{{item_cantxprecio}}</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="{{moneda}}">{{item_igv}}</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cbc:Percent>18.00</cbc:Percent>
+        <cbc:TaxExemptionReasonCode>10</cbc:TaxExemptionReasonCode>
+        <cac:TaxScheme>
+          <cbc:ID>1000</cbc:ID>
+          <cbc:Name>IGV</cbc:Name>
+          <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+        </cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+  </cac:TaxTotal>
+  <cac:Item>
+    <cbc:Description><![CDATA[{{item_descripcion}}]]></cbc:Description>
+  </cac:Item>
+  <cac:Price>
+    <cbc:PriceAmount currencyID="{{moneda}}">{{item_precioUnitario}}</cbc:PriceAmount>
+  </cac:Price>
+</cac:InvoiceLine>

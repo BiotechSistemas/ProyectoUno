@@ -1,0 +1,238 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="green.master.cs" Inherits="biotech._1logistica.green" %>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Biotech</title>
+    <link rel="icon" type="image/png" href="http://www.biotechcorp.com.pe/webapp/logoicono.png" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+<link href="css/twoColLiqLtHdr.css" rel="stylesheet" type="text/css" /><!--[if lte IE 7]>
+<style>
+.content { margin-right: -1px; } /* this 1px negative margin can be placed on any of the columns in this layout with the same corrective effect. */
+ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it needs to correct extra whiltespace between the links */
+</style>
+<![endif]-->
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <%-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>--%>
+  
+      <link rel="stylesheet" href="css/style.css">
+
+<style type="text/css">
+    body,td,th {
+	font-family: Lato, Helvetica, Arial;
+}
+body {
+	background-color: #e8e6e6;
+}
+a:link {
+	color: #678825;
+}
+a:visited {
+	color: #678825;
+}
+
+
+
+
+* {
+margin:0;
+padding:0;
+}
+
+#container{
+width: 100%;
+
+
+}
+
+#columna_izq{
+float: left;
+width: 50%;
+
+height: inherit;
+}
+
+#columna_der{
+float: left;
+widht:50%;
+height: inherit;
+}
+
+    .auto-style1 {
+        width: 100%;
+        background: linear-gradient(white, #EFEFEF); /* Standard syntax */
+    }
+    .auto-style2 {
+        text-align: right;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <form id="form1" runat="server">
+  <div class="header"><a href="#">  <p>
+      <table class="auto-style1">
+          <tr>
+              <td>
+                  <asp:Image ID="Image1" runat="server" Height="62px" ImageAlign="AbsMiddle" ImageUrl="~/images/logobiotech.png" Width="126px" />
+              </td>
+              <td>
+                  <div class="auto-style2">
+                      
+                      Fecha:
+                      <asp:Label ID="lblfecha" runat="server" style="font-weight: 700"></asp:Label>
+                      <br />
+                      <strong>TC: </strong>
+                      <asp:Label ID="lblcompra" runat="server"></asp:Label>
+                  &nbsp;&nbsp; <strong>TV:</strong><asp:Label ID="lblventa" runat="server"></asp:Label>
+                  </div>
+              </td>
+          </tr>
+      </table>
+      </p>
+      </a></div>
+  <div class="sidebar1" >
+<ul>
+      <asp:Panel ID="Panelventas" runat="server">
+    
+     <li class="dropdown">
+      <input type="checkbox" />
+      <a href="#" data-toggle="dropdown">VENTAS</a>
+      <ul class="dropdown-menu">
+           <li><a href="RealizarVenta.aspx">Pedidos</a></li>
+          <li><a href="GuiaRemision.aspx">Guia Remisión</a></li>
+
+        <li><a href="Factura.aspx">Registrar Venta</a></li>
+         
+        
+      
+        <li><a href="RegLetraBio.aspx">Letra</a></li>
+     
+        <li><a href="LetrasporCobrar.aspx">Estado Letra</a></li>
+        
+      
+        <li><a href="LetrasDescuento.aspx">Letra Descuento</a></li>
+        <li><a href="Fact_NotaCredito.aspx">Nota de Credito</a></li>
+      </ul>
+    </li>
+   </asp:Panel>
+
+     <asp:Panel ID="PanelOtrosProcesos" runat="server">
+       
+     <li class="dropdown">
+      <input type="checkbox" />
+      <a href="#" data-toggle="dropdown">ALMACEN</a>
+      <ul class="dropdown-menu">
+        <li><a href="../Almacen/WebForm1.aspx">Existencias</a></li>
+          <%--<li><a href="../Almacen/IngresoProductos.aspx">Registrar ingreso por Traslado</a></li>--%>
+         
+         
+          <li><a href="AlmCetral_IngProducto.aspx">Adm. Stock mínimo</a></li>
+          <li>
+              <asp:LinkButton ID="lbProyectado" runat="server" OnClick="lbProyectado_Click">Proyectado</asp:LinkButton></li>
+      </ul>
+    </li>
+      </asp:Panel>
+
+      <asp:Panel ID="PanelCompras" runat="server">
+
+        <%--<li class="dropdown">
+          <input type="checkbox" />
+          <a href="#" data-toggle="dropdown">COMPRAS</a>
+          <ul class="dropdown-menu">
+            <li><a href="a_ocaprobadas.aspx">Registrar Compra</a></li>
+            <li><a href="a_comprasrealizadas.aspx">Informe de Compras</a></li>
+            <li><a href="a_compras.aspx">Orden de Compra</a></li>
+            <li><a href="a_estado.aspx">Estado Oc</a></li>
+        
+           
+          </ul>
+        </li>--%>
+    </asp:Panel>
+    
+      <asp:Panel ID="Panelpagos" runat="server">
+     
+    <%--<li class="dropdown">
+      <input type="checkbox" />
+      <a href="#" data-toggle="dropdown">CTA. POR PAGAR</a>
+      <ul class="dropdown-menu">
+        
+          <li><a href="../porpagar/Pagos_ctaporpagar.aspx">Cta. pagos2018</a></li>
+        <li><a href="pagos_cambioempresa.aspx">Actualizar pagos</a></li>
+      </ul>
+    </li>--%>
+    </asp:Panel>
+
+      <asp:Panel ID="Panelensayos" runat="server">
+         
+     <li class="dropdown">
+      <input type="checkbox" />
+      <a href="#" data-toggle="dropdown">SOLIC. ENSAYOS</a>
+      <ul class="dropdown-menu">
+        <li><a href="Ensayo_listar.aspx">Ensayos Desarrollo e Inv.</a></li>
+        <li><a href="Ensayos_Vendedores.aspx">Ensayos Ventas</a></li>
+      </ul>
+    </li>
+          </asp:Panel>
+
+      <asp:Panel ID="PanelGastos" runat="server">
+       
+   
+      </asp:Panel>
+         <li class="dropdown">
+      <input type="checkbox" />
+      <a href="#" data-toggle="dropdown">PRINCIPAL</a>
+      <ul class="dropdown-menu">
+        <li><a href="../bio/ventas/Default.aspx">Ir a formulario principal</a></li>
+      
+      </ul>
+    </li>
+
+
+
+<%--    <li class="dropdown">
+      <input type="checkbox" />
+      <a href="../bio/ventas/Default.aspx" data-toggle="dropdown">PRINCIPAL</a>
+     
+    </li>--%>
+    
+      <li class="dropdown">
+      <input type="checkbox" />
+      <a href="#" data-toggle="dropdown">SALIR</a>
+      <ul class="dropdown-menu">
+        <li><a href="../Default.aspx">Cerrar sesión</a></li>
+      
+      </ul>
+    </li>
+
+        
+  </ul>
+    
+    
+    </div>
+     
+  <div class="content">
+      <%--<form id="form1" runat="server">--%>
+    
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+   
+    <%--</form>--%>
+</div>
+  <div class="footer">
+   </div>
+  <!-- end .container -->
+
+
+    </form>
+
+</div>
+</body>
+</html>

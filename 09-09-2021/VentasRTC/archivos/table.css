@@ -1,0 +1,73 @@
+body{
+  background:#f8f8f8;
+}
+table .header {
+  cursor: pointer;
+  background: #f8f8f8 url(../img/bgtd.jpg) repeat-x left bottom;
+}
+table .header:after {
+  content: "";
+  float: right;
+  margin-top: 7px;
+  border-width: 0 4px 4px;
+  border-style: solid;
+  border-color: #000 transparent;
+  visibility: hidden;
+}
+table .headerSortUp, table .headerSortDown {
+  background: #e9e9e9 url(../img/ud.jpg) repeat-x left bottom;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+}
+table .header:hover:after {
+  visibility: visible;
+}
+table .headerSortDown:after, table .headerSortDown:hover:after {
+  visibility: visible;
+  filter: alpha(opacity=60);
+  -khtml-opacity: 0.6;
+  -moz-opacity: 0.6;
+  opacity: 0.6;
+}
+table .headerSortUp:after {
+  border-bottom: none;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #000;
+  visibility: visible;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  filter: alpha(opacity=60);
+  -khtml-opacity: 0.6;
+  -moz-opacity: 0.6;
+  opacity: 0.6;
+}
+
+.datatable th,.datatable td{
+  font-family: "Droid Sans";
+  font-size: 12px;
+}
+.datatable th{
+  color:#696c73;
+  text-shadow: 0 1px 1px #fff;
+}
+
+.datatable td.job a{
+  color:#a84343;
+}
+
+.datatable tr td{
+  color:#353535;
+  background: #fff;
+}
+.datatable td .logo{
+  float:left;
+  margin-right: 10px;
+}
+.datatable td p{
+
+  overflow: hidden;
+}
+.datatable td p a{
+  display: block;
+}

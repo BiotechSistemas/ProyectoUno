@@ -1,0 +1,102 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Proyectado.master.cs" Inherits="biotech.bio.ventas.proyectado.Proyectado" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <style type="text/css">
+    th
+    {
+        text-align:center;
+    }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+     <form id="form1" runat="server">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+             <asp:Image ID="Image1" runat="server" ImageAlign="Middle" ImageUrl="~/images/logobio3.png" Width="170px" />
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+              <li ><a href="../Default.aspx">Principal</a></li>
+            <li ><a href="RegProyectadoGrupal.aspx">Proyectado Grupal</a></li>
+              
+            <%--  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Proyectado Asesor<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="Validar.aspx">Proyectado Asesores</a></li>
+          <li><a href="ProyectadoCosto.aspx">Proyectado Resumen</a></li>
+          <%--<li><a href="#">Page 1-3</a></li>--%>
+        </ul>
+      
+
+
+              
+          <%--  <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>--%>
+          </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+            
+      
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span></a></li>
+         <li><asp:LinkButton ID="lbSalir" runat="server" OnClick="lbSalir_Click"><span class="glyphicon glyphicon-log-in"></span> SALIR</asp:LinkButton></li>
+             <%--<li><a href="../admin/Default.aspx"><span class="glyphicon glyphicon-log-in"></span> Salir</a></li>--%>
+      </ul>
+
+
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+   
+
+   
+      
+  <div class="container">
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+          
+        
+        </asp:ContentPlaceHolder>
+   
+</div>
+      
+
+          </form>
+         
+</body>
+</html>

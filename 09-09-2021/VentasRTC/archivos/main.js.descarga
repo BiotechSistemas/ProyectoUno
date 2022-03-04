@@ -1,0 +1,1863 @@
+$(document).ready(function(){
+
+    function enhancedAccordion(){
+        $('.accordion').on('show', function(e){
+            $(e.target).prev('.accordion-heading').parent().addClass('open');
+        });
+
+        $('.accordion').on('hide', function(e){
+            $(this).find('.accordion-toggle').not($(e.target)).parents('.accordion-group').removeClass('open');
+        });
+
+        $('.accordion').each(function(){         
+            $(this).find('.accordion-body.in').parent().addClass('open');
+        });
+    }
+
+    enhancedAccordion();
+
+    $('.modal').on('hidden', enhancedAccordion);
+
+    if ($.browser.msie  && parseInt($.browser.version, 10) === 7) {
+      $('.modal').appendTo($('body'));
+    } 
+
+    /* Function to show popover in Buttons in Form */
+
+    $("span[rel=popover]").popover({offset: 5, placement: 'left', trigger: 'hover'});
+
+    /* --- */
+
+    /* Function to show tooltips in the elements that have the attribute [rel=tooltip] */
+
+    $('body').tooltip({ selector: '[rel=tooltip]' });
+
+    /* --- */
+
+    
+
+    /* Function to remove tooltips base on the class of the element, also it erase error class of the element parent */
+
+    function removeTooltips(){
+        $('.control-group').removeClass('error');
+        $('.messageTooltip').removeAttr('data-original-title');
+        $('.messageTooltip').removeClass('messageTooltip');
+    }
+
+    /* --- */
+
+    /* Function to show errors - Put the message and add the color red in errors */
+
+    function show_errors(errors){
+        $('.errorMessage').remove();
+        $.each(errors, function (index, elem) {
+            var selector = '[name=' + elem.field + ']';
+            var controlgroup = $(selector).parents('.control-group');
+            $(controlgroup).addClass('error');
+            $(selector).attr('data-original-title', elem.msg);
+            $(selector).addClass('messageTooltip');
+            var itemSelectError = $('[name=' + elem.field + '] + .chzn-container .chzn-single');
+            if (itemSelectError.length >= 1) {
+                $(itemSelectError).attr('data-original-title', elem.msg);
+                $(itemSelectError).addClass('messageTooltip');
+            }
+            $('.messageTooltip').tooltip('hide');
+        });
+    }
+
+    function show_errors_all(errors, klass) {
+        $.each(errors, function (index, elem) {
+            if (elem.field == '__all__')
+                $(klass).append('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + elem.msg + '</div>');
+        });
+    }
+
+    /* --- */
+
+    /* Function to set index number in table rows */
+
+    function set_table_index_numbers(tableName){
+        cont = 0;
+        $('#' + tableName + ' tbody tr').each(function() {
+            cont ++;
+            $('#' + $(this).attr('id') + ' td:first-child').text(cont);
+        });
+    }
+
+    /* --- */
+
+    /* Function used to order, this is going to be used with array.sort(compareNumber) and orders in the element[Number] */
+
+    function compareOne(a, b) {
+        if (a[1] < b[1]) return -1;
+        if (a[1] > b[1]) return 1;
+        return 0;
+    }
+
+    function compareTwo(a, b) {
+        if (a[2] < b[2]) return -1;
+        if (a[2] > b[2]) return 1;
+        return 0;
+    }
+
+    /* --- */
+
+    /* Function used to findById, sends the array and the object.id that you want and it searches and return the object */
+
+    function findById(array, id) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i][0] === id) {
+                return array[i];
+            }
+        }
+        return [];
+    }
+
+    /* --- */
+
+    $('#buttonPersonalData').click(function (e){
+        e.preventDefault();
+        $('.control-group').removeClass('error');
+        var obj = $('#savePersonalData').toObject();
+        var payload = JSON.stringify(obj);
+        $.ajax({
+            url: $('#savePersonalData').attr('action'),
+            type: 'POST',
+            data: payload,
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function (data) {
+                var save_msg = 'Su información personal se guardó exitosamente.';
+                var error_msg = 'No se ha podido guardar. Porfavor corrija los errores.';
+                if (language == 'EN') { save_msg = 'The personal data was successfully saved.', error_msg = 'Not saved. Please correct the errors.'; }
+                if (data.data == true){
+                    if ((data.email != "") && (data.password)) {
+                        //$('#personalDataActions').html('<a href="/initialize-password/" style="margin-right:10px;" class="btn btn-info pull-right">Cambiar contraseña</a>');
+						$('#personalDataActions').html('');
+                    } else {
+                        $('#personalDataActions').html('');
+                    }
+                    $('.errorMessage').remove();
+                    $('.errorMessagePersonalData').html('');
+                    $('.saveMessagePersonalData').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + save_msg + '</div>');
+                }
+                else{
+                    show_errors(data);
+                    $('.saveMessagePersonalData').html('');
+                    $('.errorMessagePersonalData').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>'+ error_msg + '</div>');
+                }
+            }
+        });
+    });
+
+    /* PersonalData - Change fields when change country */
+
+    $("#editAddressPersonalData #id_country").change(function() {
+        if ($(this).val() == 'PE') {
+            $(".PE").show();
+            $(".noPE").hide();
+        } else {
+            $(".PE").hide();
+            $(".noPE").show();
+            $('#editAddressPersonalData select[name="department"] option')[0].selected = true;
+            $('#editAddressPersonalData select[name="province"] option')[0].selected = true;
+            $('#editAddressPersonalData select[name="district"] option')[0].selected = true;
+        }
+        $('#editAddressPersonalData #id_city').val("");
+        $('#editAddressPersonalData #id_address').val("");
+    });
+
+    $('#editAddressPersonalData select[name="department"]').change(function() {
+        $('#editAddressPersonalData #id_city').val($('#editAddressPersonalData select[name="department"] option:selected').text());
+    });
+
+    $('#editAddressPersonal').submit(function() {
+        removeTooltips();
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                if (data.updated == true) {
+                    $('#savePersonalData input[name="address"]').val(data.name);
+                    $('#editAddressPersonalData').modal('hide');
+                    $('.saveMessagePersonalData').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Su domicilio se guardó exitosamente.</div>');
+                } else {
+                    show_errors(data);
+                }
+            }
+        });
+        return false;
+    });
+
+    /* --- */
+
+    $('#updateCurriculum').submit(function(e){
+        e.preventDefault();
+        removeTooltips();
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function(data) {
+                if (data.updated == true){
+                    location.reload() 
+                }
+                else{
+                    show_errors(data);
+                }
+            }
+        });
+        return false;
+    });
+
+
+    $('#confirmCurriculum').click(function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            url: $(this).attr('href'),
+            success: function(data) {
+                if (data.updated == true){
+                    $('#confirmCurriculumContainer').html('');
+                    $('#confirmCurriculumAlert').html('');
+                }
+            }
+        });
+        return false;
+    });
+
+    /* Add Academic Institution - Steps 4 and 8 */
+
+//    $('#addAcademicInstitutionStudies').submit(function() {
+//        removeTooltips();
+//        $.ajax({
+//            type: 'POST',
+//            url: $(this).attr('action'),
+//            data: $(this).serialize(),
+//            success: function (data) {
+//                if (data.created == true) {
+//                    $('#dataAddAcademicInstitutionStudies').modal('hide');
+//                    msg = data.msg_ES;
+//                    if (language == 'EN') { msg=data.msg_EN; }
+//                    if (data.error == true) {
+//                        $('.saveMessageStudies').html('');
+//                        $('.errorMessageStudies').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+//                    } else {
+//                        $('.saveMessageStudies').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+//                        $('.errorMessageStudies').html('');
+//                        $("#id_academic_institution_name").append('<option value=' + data.id + '>' + data.name + '</option>');
+//                        $("#id_academic_institution_name").trigger("liszt:updated");
+//                        $("#id_institution").append('<option value=' + data.id + '>' + data.name + '</option>');
+//                        $("#id_institution").trigger("liszt:updated");
+//                        $('#saveStudies #id_academic_institution_name_chzn a span').html(data.name);
+//                        $('#saveStudies #id_academic_institution_name_chzn .chzn-drop ul').each(function() {
+//                            $(this).find('li').each(function() {
+//                                $(this).attr('class', 'active-result');
+//                            });
+//                        });
+//                        $('#saveStudies select[name="academic_institution_name"]').each(function() {
+//                            $(this).find('option').each(function() {
+//                                if (data.name == $(this).text()) {
+//                                    this.selected = true;
+//                                }
+//                            });
+//                        });
+//                    }
+//                } else {
+//                    show_errors(data);
+//                }
+//            }
+//        });
+//        return false;
+//    });
+
+    $('#addAcademicInstitutionCourses').submit(function() {
+        removeTooltips();
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                if (data.created == true) {
+                    $('#dataAddAcademicInstitutionCourses').modal('hide');
+                    var msj =   data.msg_EN                  
+                    if (language == "ES")
+                    {
+                        msg =   data.msg_ES;                          
+                    }
+                    if (data.error == true) {
+                        $('.saveMessageCourses').html('');
+                        $('.errorMessageCourses').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                    } else {                        
+                        $('.saveMessageCourses').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                        $('.errorMessageCourses').html('');
+                        $("#id_institution").append('<option value=' + data.id + '>' + data.name + '</option>');
+                        $("#id_institution").trigger("liszt:updated");
+                        $("#saveCourses select[name='institution']").each(function() {
+                            $(this).find('option').each(function() {
+                                if (data.name == $(this).text()) {
+                                    this.selected = true;
+                                }
+                            });
+                        });
+                    }
+                } else {                    
+                    show_errors(data);
+                }
+            }
+        });
+        return false;
+    });
+
+    $('#addLanguages').submit(function() {        
+        removeTooltips();                                
+        $.ajax({
+          type: 'POST',          
+          url: $(this).attr('action'),
+          data: $(this).serialize(),
+          success: function (data) {            
+            if (data.created == true) {
+                    $('#editLanguageModal').modal('hide');                    
+                    var msj =   data.msg_EN                  
+                    if (language == "ES")
+                    {
+                        msj =   data.msg_ES;                          
+                    }                    
+                    if (data.error == true) {                     
+                        $('.saveMessageLanguages').html('');
+                        $('.errorMessageLanguages').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msj + '</div>');
+                    } else {                        
+                        $('.saveMessageLanguages').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msj + '</div>');
+                        $('.errorMessageLanguages').html('');
+                        
+                        $("#id_skill").append('<option value=' + data.id + '>' + data.name + '</option>');
+                        $("#id_skill").trigger("liszt:updated");                        
+                    }
+                } else {                    
+                    show_errors(data);
+                } 
+          }
+        });
+        return false;
+    });
+
+    /* --- */
+
+/* --------------------------------------------------------------------------------------
+ * ---------------------------------- STEP 4: STUDY RECORDS -----------------------------
+ * -------------------------------------------------------------------------------------- */
+
+    function get_month(month){
+        if (month == 1) {return 'Ene'}
+        if (month == 2) {return 'Feb'}
+        if (month == 3) {return 'Mar'}
+        if (month == 4) {return 'Abr'}
+        if (month == 5) {return 'May'}
+        if (month == 6) {return 'Jun'}
+        if (month == 7) {return 'Jul'}
+        if (month == 8) {return 'Ago'}
+        if (month == 9) {return 'Sep'}
+        if (month == 10) {return 'Oct'}
+        if (month == 11) {return 'Nov'}
+        if (month == 12) {return 'Dic'}
+    }
+
+    function get_finished_date_format(finished){
+        if (finished == undefined || finished == null){ return ""; }
+        else {
+            date = finished.split('/');
+            return get_month(parseInt(date[1], 10)) + ', ' + date[2]; }
+    }
+
+
+    $('.autocomplete_study').typeahead({
+        source: function (query, process) {
+            return $.get(autocompleteStudyURL, { query: query }, function (data) {
+                return process(data);
+            });
+        }
+    });
+
+    $('.autocomplete_business_name').typeahead({
+        source: function (query, process) {
+            return $.get(autocompleteBusinessNameURL, { query: query }, function (data) {
+                return process(data);
+            });
+        }
+    });
+
+    $('.autocomplete_business_activity').typeahead({
+        source: function (query, process) {
+            return $.get(autocompleteBusinessActivityURL, { query: query }, function (data) {
+                return process(data);
+            });
+        }
+    });
+
+    $('.autocomplete_work_position').typeahead({
+        source: function (query, process) {
+            return $.get(autocompleteWorkPositionURL, { query: query }, function (data) {
+                return process(data);
+            });
+        }
+    });
+
+    $('.autocomplete_computing_skill').typeahead({
+        source: function (query, process) {
+            return $.get(autocompleteComputingSkillURL, { query: query }, function (data) {
+                return process(data);
+            });
+        }
+    });
+
+    $('.autocomplete_academic_institution_study').typeahead({
+        source: function (query, process) {
+            return $.get(autocompleteAcademicInstitution, { query: query }, function (data) {
+                return process(data);
+            });
+        }
+    });
+
+    $('.autocomplete_academic_institution_course').typeahead({
+        source: function (query, process) {
+            return $.get(autocompleteAcademicInstitution, { query: query }, function (data) {
+                return process(data);
+            });
+        }
+    });
+
+    // --------------------------- CREATE STUDYRECORD -------------------------
+
+    $('#createStudy').click(function (e) {
+        e.preventDefault();
+        removeTooltips();
+        var obj = $('#saveStudies').toObject();
+        var payload = JSON.stringify(obj);
+        $.ajax({
+            type: 'POST',
+            url: $('#saveStudies').attr('action'),
+            data: payload,
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function(data) {
+                if (data.save == true){
+                    clean_study_form();
+                    date = data.started.split('/');
+                    var started = get_month(parseInt(date[1], 10)) + ', ' + date[2];
+                    var finished = get_finished_date_format(data.finished);
+                    var education_level = data.education_level_ES;
+                    var study_name = data.study_name_ES;
+                    var edit_tooltip = 'Editar';
+                    var delete_tooltip = 'Eliminar';
+                    var msg = 'El estudio se guardó exitosamente.';
+                    if (language == 'EN'){ education_level = data.education_level_EN, study_name = data.study_name_EN, edit_tooltip='Edit', delete_tooltip='Delete', msg='The study was successfully saved.' }
+                    $('#selectAllStudies').removeAttr('checked');
+                    $('#studiesTable').append('<tr class="success" id="studiesRow' + data.id + '"><td></td><td>' + education_level + '</td><td>' + study_name + '</td><td>' + data.academic_institution_name + '</td><td>' + started + '</td><td>' + finished + '</td><td><a class="editStudy study' + data.id + '" href="javascript:;" data-original-title="' + edit_tooltip + '" rel="tooltip"><i class="icon-pencil" style="margin-right: 4px; "></i></a><a class="confirmDeleteStudy study' + data.id + '" data-toggle="modal" href="#confirmDeleteStudy" data-original-title="' + delete_tooltip + '" rel="tooltip"><i class="icon-remove"></i></a></tr>');
+                    set_table_index_numbers('studiesTable');
+                    $('.saveMessageStudies').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                }
+                else{
+                    var msg = 'No se pudo guardar. Por favor corrija los errores.';
+                    if (language == 'EN') { msg = 'Not saved. Please correct the errors'; }
+                    $('.saveMessageStudies').html('');
+                    $('.errorMessageStudies').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                    show_errors(data);
+                }
+            }
+        });
+    });
+
+    // ------------------------- DELETE STUDYRECORD ------------------------
+
+    $('a.confirmDeleteStudy').live("click", function (e){
+        $('.saveMessageStudies').html('');
+        removeTooltips();
+        var id = String($(this).attr('class').match(/study[0-9]+/g)).replace(/study/, "");
+        var arr = new Array();
+        $('#deleteStudy').append('<input type="hidden" name="id" value="' + id + '"/>');
+        $('#studiesRow' + id + ' td').each(function (){
+            arr.push($(this).text());
+        });
+        if (!arr[5] && language == 'ES'){ arr[5] = 'la fecha';}
+        if (!arr[5] && language == 'EN'){ arr[5] = 'date';}
+        if (language == 'ES'){ $('p.deleteStudyText').html('¿Está seguro de eliminar el estudio de <b>' + arr[2] + '</b> en el/la <b>' + arr[3] + '</b> desde <b>' + arr[4] + '</b> hasta <b>' + arr[5] + '</b>?'); }
+        else{ $('p.deleteStudyText').html('Are you sure to delete the study <b>' + arr[2] + '</b> in  <b>' + arr[3] + '</b> from <b>' + arr[4] + '</b> to <b>' + arr[5] + '</b>?'); }
+    });
+
+
+    $('.deleteStudy').click(function (e){
+        e.preventDefault();
+        var obj = $('#deleteStudy').toObject();
+        var payload = JSON.stringify(obj);
+        $.ajax({
+            type: 'POST',
+            url: $('#deleteStudy').attr('action'),
+            data: payload,
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function(data) {
+                if (data == true){
+                    $('#confirmDeleteStudy').modal('hide');
+                    $('#studiesRow' + obj.id).remove();
+                    set_table_index_numbers('studiesTable');
+                    $('#cancelStudy').click();
+                    msg = 'El estudio se eliminó exitosamente.'
+                    if (language == 'EN') { msg = 'The study was successfully deleted'; }
+                    $('.saveMessageStudies').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                }
+            }
+        });
+    });
+
+    // ------------------------ UPDATE STUDYRECORD --------------------------
+
+    function closeStudyView(data) {
+        $('#collapseStudies .btn').show()
+        $(".field_view").hide()
+	    $('#adviseStudy').show()
+        $('#principalCheck').hide();
+        $('#updateOfficialStudy').hide();
+
+        $.each(data, function (key, value) {
+            $('#saveStudies [name="' + key + '"]').val(value).after('').show();
+        });
+
+        $('#createStudy').hide();
+        $('#updateStudy').hide();
+        $('#closeStudyView').hide();
+        $('#cancelStudy').hide();
+    }
+
+    $('a.editStudy').live("click", function (e){
+        e.preventDefault();
+        clean_study_form();
+        var id = String($(this).attr('class').match(/study[0-9]+/g)).replace(/study/, "");	
+        
+        var noEdit = $(this).hasClass('noEdit');
+        
+        if (noEdit) {
+          var url = getOfficialStudyURL;
+        } else {
+          var url = getStudyURL;
+        }
+        
+        var payload = {id: id};
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: payload,
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function(data) {
+   	        var principalcheck = $('#principalCheck');
+	        var adviseStudy = $('#adviseStudy');
+              
+            if (noEdit) {
+		        principalcheck.show();
+         		adviseStudy.hide();
+                $.each(data, function (key, value) {
+                    var input = $('#saveStudies [name="' + key + '"]')		    
+
+		    if (input.attr('type') == 'checkbox') {		                            
+		      if(value == 'True'  || value == 'true' || value == '1')
+		          input.attr('checked','checked')
+		      else
+			  input.removeAttr('checked')                      
+                    }
+			
+                    if (input.attr('type') !== 'hidden' && input.attr('type') !== 'checkbox') {		                            
+                      input.next('p').remove()
+                      input.after("<p class='field_view' style='display: inline-block;margin: 0;vertical-align: middle;padding-top: 5px;'>" + value + "</p>")
+                      input.hide()
+                    }
+                });
+
+                $('#collapseStudies .btn').hide();
+
+                var cancelStudy = $('#cancelStudy');
+		        $('#updateStudy').hide();
+				$('#updateOfficialStudy').show();
+				$('#updateOfficialStudy').attr('data-id',id);
+                if($('#closeStudyView').length == 0) {
+                    var clone = cancelStudy.clone().attr('id', 'closeStudyView');
+                    cancelStudy.after(clone);
+                }
+                $('#closeStudyView').one("click", function() {
+                    closeStudyView(data)
+                    $('#createStudy').show();
+                }).show();
+              } else {
+		        principalcheck.hide();
+		        adviseStudy.show();
+                closeStudyView(data);
+                $('#updateStudy').show();
+				$('#updateOfficialStudy').hide();
+                $('#cancelStudy').show();
+                $('#studiesRow' + id).addClass('warning');
+              }
+              
+            }
+        });
+    });
+
+    $('#updateStudy').click(function (e){
+        e.preventDefault();
+        var obj = $('#saveStudies').toObject();
+        var payload = JSON.stringify(obj);
+        $.ajax({
+            type: 'POST',
+            url: updateStudyURL,
+            data: payload,
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function(data) {
+                if (data.save == true){
+                    $('#cancelStudy').click();
+                    date = data.started.split('/');
+                    var started = get_month(parseInt(date[1], 10)) + ', ' + date[2];
+                    var finished = get_finished_date_format(data.finished);
+                    var number = $('#studiesRow'+data.id+' td:first-child').text();
+                    var education_level = data.education_level_ES;
+                    var study_name = data.study_name_ES;
+                    var msg = 'El estudio se guardó exitosamente.';
+                    if (language == 'EN') { education_level = data.education_level_EN, study_name = data.study_name_EN, msg = 'The study was successfully saved.'; }
+                    $('#studiesRow' + data.id).replaceWith('<tr class="success" id="studiesRow' + data.id + '"><td>' + number + '</td><td>' + education_level + '</td><td>' + study_name + '</td><td>' + data.academic_institution_name + '</td><td>' + started + '</td><td>' + finished + '</td><td><a class="editStudy study' + data.id + '" href="javascript:;" data-original-title="Editar" rel="tooltip"><i class="icon-pencil" style="margin-right: 4px; "></i></a><a class="confirmDeleteStudy study' + data.id + '" data-toggle="modal" href="#confirmDeleteStudy" data-original-title="Eliminar" rel="tooltip"><i class="icon-remove"></i></a>');
+                    $('.saveMessageStudies').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                }
+                else{
+                    var msg = 'No se pudo guardar. Por favor corrija los errores.';
+                    if (language == 'EN') { msg = 'Not saved. Please correct the errors'; }
+                    $('.saveMessageStudies').html('');
+                    $('.errorMessageStudies').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                    show_errors(data);
+                }
+            }
+        });
+    });
+
+	$('#updateOfficialStudy').click(function (e){
+        e.preventDefault();
+        var obj = $('#saveStudies').toObject();
+     	 	var id = $('#updateOfficialStudy').attr('data-id');
+        var flag = $('#id_header_show').prop('checked');
+      		var payload = {id: id, flag:flag};
+
+        $.ajax({
+            type: 'POST',
+            url: updateOfficialStudyURL,
+            data: payload,
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function(data) {
+                console.log(data);
+                if (data == true){
+                    $('#closeStudyView').click();                      
+                }
+                else{
+                    var msg = 'No se pudo guardar. Por favor corrija los errores.';
+                    if (language == 'EN') { msg = 'Not saved. Please correct the errors'; }
+                    $('.saveMessageStudies').html('');
+                    $('.errorMessageStudies').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                    show_errors(data);
+                }
+            }
+        });
+    });
+
+    function clean_study_form(){
+        removeTooltips();
+        $('#saveStudies')[0].reset();
+        $('.saveMessageStudies').html('');
+        $('.errorMessageStudies').html('');
+        $('.control-group').removeClass('error');
+        $('#studiesTable tr').removeClass('warning success');
+    }
+
+    $('#cancelStudy').live("click", function(e){
+        clean_study_form();
+        $('#cancelStudy').hide();
+        $('#createStudy').show();
+        $('#updateStudy').hide();
+    });
+
+
+/* --------------------------------------------------------------------------------------
+ * ---------------------------------- STEP 6: WORK EXPERIENCE ---------------------------
+ * -------------------------------------------------------------------------------------- */
+
+    // --------------------------- CREATE WORK EXPERIENCE ---------------------------
+
+    $('#createExperience').click(function (e) {        
+        removeTooltips();
+        e.preventDefault();
+        $('.control-group').removeClass('error');
+        var obj = $('#saveExperience').toObject();
+        obj.functions = tinymce.get('workFunctionsTinyMCE').getContent();
+        obj.achievements = tinymce.get('workAchievementsTinyMCE').getContent();
+        var payload = JSON.stringify(obj);
+        $.ajax({
+            type: 'POST',
+            url: $('#saveExperience').attr('action'),
+            data: payload,
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function(data) {
+                if (data.save == true){
+                    clean_experience_form();
+                    date = data.started.split('/');
+                    var started = get_month(parseInt(date[1], 10)) + ', ' + date[2];
+                    var finished = get_finished_date_format(data.finished);
+                    $('#selectAllExperiences').removeAttr('checked')
+                    $('#experienceTable').append('<tr class="success" id="experienceRow' + data.id + '"><td></td><td>' + data.business_name + '</td><td>' + data.activity + '</td><td>' + data.position + '</td><td>' + started + '</td><td>' + finished + '</td><td><a class="editExperience experience' + data.id + '" href="javascript:;" data-original-title="Editar" rel="tooltip"><i class="icon-pencil" style="margin-right: 4px; "></i></a><a class="confirmDeleteExperience experience' + data.id + '" data-toggle="modal" href="#confirmDeleteExperience" data-original-title="Eliminar" rel="tooltip"><i class="icon-remove"></i></a></td></tr>');
+                    set_table_index_numbers('experienceTable');
+                    $('.saveMessageExperience').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>La experiencia ha sido guardado exitosamente.</div>');
+
+                }
+                else{
+                    $('.saveMessageExperience').html('');
+                    msg = 'No ha sido guardado. Por favor corrija los errores.';
+                    if (language == "EN"){ msg = 'Not saved. Please correct the errors.'; }
+                    if (data[2]){ if ('error' in data[2]){ msg = data[2].error; } }
+                    $('.errorMessageExperience').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                    show_errors(data);
+                    show_errors_all(data, '.errorMessageExperience');
+                }
+            }
+        });
+    });
+
+    // ------------------------- DELETE WORK EXPERIENCE ------------------------
+
+    $('a.confirmDeleteExperience').live("click", function (e){
+        $('.saveMessageExperience').html('');
+        removeTooltips();
+        var id = String($(this).attr('class').match(/experience[0-9]+/g)).replace(/experience/, "");
+        var data = [];
+        $('#experienceRow' + id + ' td').each(function (){
+            data.push($(this).text());
+        });
+        var date_end = data[5];
+        var date_end_ES = date_end, date_end_EN = date_end;
+        if (!date_end) { date_end_ES = "la fecha", date_end_EN = "date"; }
+        if (language == "ES") { $('#confirmDeleteExperience .modal-body').html('¿Desea eliminar el registro de su experiencia laboral en la empresa <b>' + data[1] + '</b> con el cargo <b>' + data[3] + '</b> desde <b>' + data[4] + '</b> hasta <b>' + date_end_ES +'</b>?'); }
+        if (language == "EN") { $('#confirmDeleteExperience .modal-body').html('Are you sure to delete their work experience in company <b>' + data[1] + '</b> with position <b>' + data[3] + '</b> from <b>' + data[4] + '</b> to <b>' + date_end_EN +'</b>?'); }
+        $('#deleteExperience').append('<input type="hidden" name="id" value="' + id + '"/>');
+    });
+
+    $('.deleteExperience').click(function (e){
+        e.preventDefault();
+        var obj = $('#deleteExperience').toObject();
+        var payload = JSON.stringify(obj);
+        $.ajax({
+            type: 'POST',
+            url: $('#deleteExperience').attr('action'),
+            data: payload,
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function(data) {
+                if (data == true){
+                    $('#confirmDeleteExperience').modal('hide');
+                    $('#experienceRow' + obj.id).remove();
+                    set_table_index_numbers('experienceTable');
+                    $('#cancelExperience').click();
+                    $('.saveMessageExperience').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>La experiencia se eliminó exitosamente.</div>');
+                }
+            }
+        });
+    });
+
+    // ------------------------ UPDATE WORK EXPERIENCE --------------------------
+
+    $('a.editExperience').live("click", function (e){
+        e.preventDefault();
+        clean_experience_form();
+        var id = String($(this).attr('class').match(/experience[0-9]+/g)).replace(/experience/, "");
+        var payload = JSON.stringify({id: id});
+        $.ajax({
+            type: 'POST',
+            url: getExperienceURL,
+            data: payload,
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function(data) {
+                $.each(data, function (key, value) {
+                    if (key == "finished" && value == null){
+                        $('#checkedFinishedExperience').attr('checked', 'checked');
+                        $('#checkedFinishedExperience').click();
+                        $('#checkedFinishedExperience').attr('checked', 'checked');
+                    }
+                    $('#saveExperience [name="' + key + '"]').val(value);
+                    if (key == 'functions') { tinymce.get('workFunctionsTinyMCE').setContent(value); }
+                    if (key == 'achievements') { tinymce.get('workAchievementsTinyMCE').setContent(value); }
+                });
+                $('#createExperience').hide();
+                $('#updateExperience').show();
+                $('#cancelExperience').show();
+                $('#experienceRow' + id).addClass('warning');
+            }
+        });
+    });
+
+    $('#updateExperience').click(function (e){
+        e.preventDefault();
+        var obj = $('#saveExperience').toObject();
+        obj.functions = tinymce.get('workFunctionsTinyMCE').getContent();
+        obj.achievements = tinymce.get('workAchievementsTinyMCE').getContent();
+        var payload = JSON.stringify(obj);
+        $.ajax({
+            type: 'POST',
+            url: updateExperienceURL,
+            data: payload,
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function(data) {
+                if (data.save == true){
+                    $('#cancelExperience').click();
+                    var date = data.started.split('/');
+                    var started = get_month(parseInt(date[1], 10)) + ', ' + date[2];
+                    var finished = get_finished_date_format(data.finished);
+                    var number = $('#experienceRow'+data.id+' td:first-child').text();
+                    if (language == 'ES'){
+                        $('#experienceRow' + data.id).replaceWith('<tr class="success" id="experienceRow' + data.id + '"><td>' + number + '</td><td>' + data.business_name + '</td><td>' + data.activity + '</td><td>' + data.position + '</td><td>' + started + '</td><td>' + finished + '</td><td><a class="editExperience experience' + data.id + '" href="javascript:;" data-original-title="Editar" rel="tooltip"><i class="icon-pencil" style="margin-right: 4px; "></i></a><a class="confirmDeleteExperience experience' + data.id + '" data-toggle="modal" href="#confirmDeleteExperience" data-original-title="Eliminar" rel="tooltip"><i class="icon-remove"></i></a>');
+                        $('.saveMessageExperience').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Su experiencia ha sido guardado exitosamente.</div>');
+                    }
+                    else{
+                        $('#experienceRow' + data.id).replaceWith('<tr class="success" id="experienceRow' + data.id + '"><td>' + number + '</td><td>' + data.business_name + '</td><td>' + data.activity_EN + '</td><td>' + data.position_EN + '</td><td>' + started + '</td><td>' + finished + '</td><td><a class="editExperience experience' + data.id + '" href="javascript:;" data-original-title="Edit" rel="tooltip"><i class="icon-pencil" style="margin-right: 4px; "></i></a><a class="confirmDeleteExperience experience' + data.id + '" data-toggle="modal" href="#confirmDeleteExperience" data-original-title="Delete" rel="tooltip"><i class="icon-remove"></i></a>');
+                        $('.saveMessageExperience').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>The work experience was successfully saved.</div>');
+                    }
+                }
+                else{
+                    $('.saveMessageExperience').html('');
+                    msg = 'No ha sido guardado. Porfavor corrija los errores.';
+                    if (language == "EN"){ msg = 'Not saved. Please correct the errors.'; }
+                    if (data[2]){ if ('error' in data[2]){ msg = data[2].error; } }
+                    $('.errorMessageExperience').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                    show_errors(data);
+                }
+            }
+        });
+    });
+
+    function clean_experience_form(){
+        removeTooltips();
+        $('#saveExperience')[0].reset();
+        $('.saveMessageExperience').html('');
+        $('.errorMessageExperience').html('');
+        $('.control-group').removeClass('error');
+        $('#experienceTable tr').removeClass('warning success');
+
+    }
+
+    $('#cancelExperience').live("click", function(e){
+        clean_experience_form();
+        $('#checkedFinishedExperience').removeAttr('checked');
+        $('.showFinishedExperience').removeClass('hidden');
+        $('#createExperience').show();
+        $('#updateExperience').hide();
+        $('#cancelExperience').hide();
+    });
+
+    $('#checkedFinishedExperience').live("click", function (){
+        if (this.checked){
+            $('.showFinishedExperience').addClass('hidden');
+            $('.showFinishedExperience input').val('');
+            $('.showFinishedExperience').removeClass('error');
+            $('.showFinishedExperience input').removeAttr('data-original-title');
+            $('.showFinishedExperience input').removeClass('messageTooltip');
+        }
+        else {
+            $('.showFinishedExperience').removeClass('hidden');
+        }
+    });
+
+    $('#checkedFinishedCourse').live("click", function (){
+        if (this.checked){
+            $('.showFinishedCourse').addClass('hidden');
+            $('.showFinishedCourse input').val('');
+            $('.showFinishedCourse').removeClass('error');
+            $('.showFinishedCourse input').removeAttr('data-original-title');
+            $('.showFinishedCourse input').removeClass('messageTooltip');
+        }
+        else {
+            $('.showFinishedCourse').removeClass('hidden');
+        }
+    });
+
+
+    $('#experienceStarted').datepicker().on('changeDate', function (ev) {
+                                        $(this).datepicker('hide');
+                                        });;
+    $('#experienceFinished').datepicker().on('changeDate', function (ev) {
+                                        $(this).datepicker('hide');
+                                        });;
+
+    /* Languages */
+
+    showLanguages(languagesListado);
+    
+    $('#saveLanguages').submit(function() {
+        removeTooltips();        
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {                
+                if (data.created == true){
+                    $('.errorMessageLanguages').html('');
+                    if (language == "ES"){ $('.saveMessageLanguages').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>El idioma ha sido registrado exitosamente.</div>'); }
+                    else { $('.saveMessageLanguages').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>The language was successfully saved.</div>'); }
+                    $('#selectAllLanguages').removeAttr('checked');
+                    if (data.updated == true) {
+                        languagesListado = $.grep(languagesListado, function(item) {
+                            return data.id != item[0];
+                        }); 
+                    } else {
+                        $('#saveLanguages #id_skill_chzn a span').html("---------");
+                        $('#saveLanguages #id_skill_chzn .chzn-drop ul').each(function() {
+                            $(this).find('li').each(function() {
+                                $(this).attr('class', 'active-result');
+                            });
+                        });
+                        $("#saveLanguages select[name='skill']").each(function() {
+                            $(this).find('option').each(function() {
+                                if ("---------" == $(this).text()) {
+                                    this.selected = true;
+                                }
+                            });
+                        });
+                        $('#saveLanguages select[name="level"] option')[0].selected = true;
+                    }
+                    languagesListado.push([data.id.toString(), data.skill_id, data.skill, data.id_level, data.level, data.speak_level_id, data.speak_level]);                    
+                    showLanguages(languagesListado, "success", data.id.toString());
+                } else {
+                    if (data[0].field == 'error'){
+                        $('.errorMessageLanguages').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + data[0].msg + '</div>');
+                        $('.saveMessageLanguages').html('');
+                    } else {
+                        show_errors(data);
+                        $('.saveMessageLanguages').html('');
+                        if (language == "ES"){ $('.errorMessageLanguages').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>El idioma no ha sido guardado. Porfavor corrija los errores.</div>'); }
+                        else { $('.errorMessageLanguages').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>Not saved. Please correct the errors.</div>');}
+                    }
+                }
+            }
+        });
+        return false;
+    });
+
+    $('.add-language').live("click", function(e) {
+        removeTooltips();
+        alert('SHOW');
+        $('[name="nameES"]').val('');
+        $('[name="nameEN"]').val('');
+        $('.languageID').html('');
+        $('#editLanguageModal .modal-header h3')[0].innerHTML = 'Agregar idioma';
+        removeErrors();
+        $('#editLanguageModal').modal('show');
+    });
+
+
+    $('.editLanguage').live("click", function(e) {
+        removeTooltips();
+        $('.errorMessageLanguages').html('');
+        $('.saveMessageLanguages').html('');
+        var itemFound = findById(languagesListado, this.id);
+        showLanguages(languagesListado, "warning", itemFound[0]);
+        $('#saveLanguages #id_skill_chzn a span').html(itemFound[2]);
+        $('#saveLanguages #id_skill_chzn .chzn-drop ul').each(function() {
+            $(this).find('li').each(function() {
+                if (itemFound[2] == $(this).text()) {
+                    $(this).attr('class', 'active-result result-selected');
+                } else {
+                    $(this).attr('class', 'active-result');
+                }
+            });
+        });
+
+        $("#saveLanguages select[name='skill']").each(function() {
+             $(this).find('option').each(function() {
+                 if (itemFound[2] == $(this).text()) {
+                     this.selected = true;
+                 }
+             });
+        });        
+
+        $('#saveLanguages select[name="level"] option')[itemFound[3] - 1].selected = true;
+        $('#saveLanguages select[name="speak_level"] option')[itemFound[5] - 1].selected = true;
+
+        $('#saveLanguages').attr('action', '/curriculum/' + curriculumNumber + '/languages/edit_language/' + itemFound[0] + '/');
+        $('#controlsLanguage').html('<button type="submit" class="btn btn-success" id="buttonLanguage">Actualizar</button> <a class="btn" id="cancelLanguageEdit">Cancelar</a>')
+    });
+
+    $('#cancelLanguageEdit').live("click", function(e) {
+        removeTooltips();
+        $('.errorMessageLanguages').html('');
+        $('.saveMessageLanguages').html('');
+        $('#saveLanguages #id_skill_chzn a span').html("---------");
+        $('#saveLanguages #id_skill_chzn .chzn-drop ul').each(function() {
+            $(this).find('li').each(function() {
+                $(this).attr('class', 'active-result');
+            });
+        });
+        $("#saveLanguages select[name='skill']").each(function() {
+            $(this).find('option').each(function() {
+                if ("---------" == $(this).text()) {
+                    this.selected = true;
+                }
+            });
+        });
+        $('#saveLanguages select[name="level"] option')[0].selected = true;
+        $('#saveLanguages select[name="speak_level"] option')[0].selected = true;
+        $('#saveLanguages').attr('action', '/curriculum/' + curriculumNumber + '/languages/new_language/');
+        $('#controlsLanguage').html('<button type="submit" class="btn btn-info" id="buttonLanguage">Agregar</button>')
+        showLanguages(languagesListado);
+    });
+
+    $('.deleteLanguage').live("click", function(e) {
+        removeTooltips();
+        $('.errorMessageLanguages').html('');
+        $('.saveMessageLanguages').html('');
+        var itemFound = findById(languagesListado, this.id);
+        if (language == "ES") { $('#confirmDeleteLanguages .modal-body').html("<p>¿Desea eliminar el idioma <b>" + itemFound[2] + "</b> de nivel <b>" + itemFound[4] + "</b>?</p>"); }
+        if (language == "EN") { $('#confirmDeleteLanguages .modal-body').html("<p>Are you sure to delete language <b>" + itemFound[2] + "</b> level <b>" + itemFound[4] + "</b>?</p>"); }
+        $('#deleteLanguages').attr('action', '/curriculum/' + curriculumNumber + '/languages/delete_language/' + itemFound[0] + '/');
+    });
+
+    $('#deleteLanguages').submit(function() {
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                if (data.deleted == true){
+                    $('#cancelLanguageEdit').click();
+                    $('.saveMessageLanguages').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + data.msg + '</div>');
+                    languagesListado = $.grep(languagesListado, function(item) {
+                        return data.id != item[0];
+                    });
+                    showLanguages(languagesListado); 
+                    
+                } else {
+                    $('.errorMessageLanguages').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + data[0].msg + '</div>');
+                    $('.saveMessageLanguages').html('');
+                }
+            }
+        });
+	$('#confirmDeleteLanguages').modal('hide');
+        return false;
+    });
+
+    function showLanguages(items, type, id) {        
+        type = type || "";
+        id = id || 0;
+        var data = "";
+        if (items.length == 0) {
+            if ( language == "ES"){
+                data = "No se tienen idiomas.";
+            }
+            else{
+                data = "You don't have languages.";
+            }
+        } else {
+            $('#dataLanguages').addClass('show-results');
+            if (language == "ES"){ data = data + "<table class='table table-striped table-condensed'><thead><tr><th>Nro.</th><th>Idioma</th><th>Nivel</th><th>Hablado</th><th>Opciones</th></tr></thead><tbody>"; }
+            else { data =  data + "<table class='table table-striped table-condensed'><thead><tr><th>Num.</th><th>Language</th><th>Write Level</th><th>Speak Level</th><th>Options</th></tr></thead><tbody>"; }
+            items.sort(compareTwo);
+            jQuery.each(items, function(index) {
+                data = data + "<tr";
+                if (type != "") {
+                    if (id == this[0]) {
+                        data = data + " class='" + type + "'";
+                    }
+                }
+                data = data + "><td>";
+                data = data + (index + 1)
+                data = data + "</td>";
+                data = data + "<td>";
+                data = data + this[2];
+                data = data + "</td>";
+                data = data + "<td>";
+                if (language == "EN"){
+                    if (this[3] == 3){ data = data + "Advanced";}
+                    if (this[3] == 2){ data = data + "Intermediate";}
+                    if (this[3] == 1){ data = data + "Basic";}
+                }
+                else{
+                    data = data + this[4];
+                }
+                data = data + "</td>";
+                
+                
+                
+                data = data + "<td>";
+                if (language == "EN"){
+                    if (this[5] == 5){ data = data + "Native";}
+                    if (this[5] == 4){ data = data + "Technical";}
+                    if (this[5] == 3){ data = data + "Advanced";}
+                    if (this[5] == 2){ data = data + "Intermediate";}
+                    if (this[5] == 1){ data = data + "Basic";}
+                }
+                else{
+                    data = data + this[6];
+                }
+                data = data + "</td>";
+
+
+
+                data = data + "<td>";
+                if (language == "ES") { title_edit="Editar", title_delete="Eliminar"; }
+                if (language == "EN") { title_edit="Edit", title_delete="Delete"; }
+                if (type == "error") {
+                    if (id == this[0]) {
+                        data = data + "";
+                    } else {
+                        data = data + "<a class='editLanguage' data-original-title='" + title_edit+ "'rel='tooltip' id='";
+                        data = data + this[0];
+                        data = data + "'><i class='icon-pencil'></i></a>";
+                        data = data + "&nbsp;<a data-toggle='modal' href='#confirmDeleteLanguages' data-original-title='" + title_delete + "' rel='tooltip' class='deleteLanguage' id='";
+                        data = data + this[0];
+                        data = data + "'><i class='icon-remove'></i></a>";
+                    }
+                } else {
+                    data = data + "<a class='editLanguage' data-original-title='" + title_edit + "'rel='tooltip' id='";
+                    data = data + this[0];
+                    data = data + "'><i class='icon-pencil'></i></a>";
+                    data = data + "&nbsp;<a data-toggle='modal' href='#confirmDeleteLanguages' data-original-title='" + title_delete + "' rel='tooltip' class='deleteLanguage' id='";
+                    data = data + this[0];
+                    data = data + "'><i class='icon-remove'></i></a>";
+                }
+                data = data + "</td>";
+            });
+            data = data + "</form></tbody></table>";
+        }
+        $('#dataLanguages').html(data);
+    }
+
+    /* --- */
+
+    /* Courses */
+
+    $('#courseStarted').datepicker().on('changeDate', function (ev) {
+                                        $(this).datepicker('hide');
+                                        });;
+    $('#courseFinished').datepicker().on('changeDate', function (ev) {
+                                        $(this).datepicker('hide');
+                                        });;
+
+    $('#id_date_start').attr('class', 'input-small');
+    $('#id_date_start').attr('placeholder', 'dd/mm/yyyy');
+    $('#id_date_end').attr('class', 'input-small');
+    $('#id_date_end').attr('placeholder', 'dd/mm/yyyy');
+
+    showCourses(coursesListado);
+
+    /*
+    $('#buttonCourse').click(function(e) {
+        alert('INICIO Button');
+        removeTooltips();                        
+        e.preventDefault();        
+        var obj = $('#saveCourses').toObject();        
+        var payload = JSON.stringify(obj);        
+        alert('INICIO Button2');
+        var url =$('#saveCourses').attr('action');
+        alert(url);
+        alert(payload);
+        $.ajax({
+            type: 'POST',
+            url: $('#saveCourses').attr('action'),
+            data: payload,                        
+            success: function (data) {                
+                alert('SUCCESS');
+                if (data.created == true){                    
+                    alert('CREATED')
+                    $('.errorMessageCourses').html('');
+                    if (language == "ES"){ $('.saveMessageCourses').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>El curso o seminario se guardó exitosamente.</div>'); }
+                    if (language == "EN"){ $('.saveMessageCourses').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Tha course/seminar was successfully saved.</div>'); }
+                    if (data.updated == true) {
+                        coursesListado = $.grep(coursesListado, function(item) {
+                            return data.id != item[0];
+                        }); 
+                    } else {
+                        if (language == "ES") { $('#saveCourses input[name="name"]').val(""); }
+                        if (language == "EN") { $('#saveCourses input[name="nameEN"]').val(""); }
+                        $('#saveCourses input[name="date_start"]').val("");
+                        $('#saveCourses input[name="date_end"]').val("");
+                    }
+                    coursesListado.push([data.id.toString(), data.name, data.id_institution, data.institution, data.date_start, data.date_end, data.nameEN]);
+                    showCourses(coursesListado, "success", data.id.toString());
+                    alert('FINISH')
+                } else {
+                    if (data[0].field == 'error'){
+                        $('.errorMessageCourses').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + data[0].msg + '</div>');
+                        $('.saveMessageCourses').html('');
+                    } else {
+                        $('.saveMessageCourses').html('');
+                        if (language == "ES") { $('.errorMessageCourses').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>El curso y/o seminario no ha sido guardado. Porfavor corrija los errores.</div>'); }
+                        if (language == "EN") { $('.errorMessageCourses').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>Not saved. Please correct the errors.</div>'); }
+                        show_errors(data);
+                        show_errors_all(data, '.errorMessageCourses');
+                    }
+                }
+            }
+        });
+        return false;
+    });
+    */
+
+
+    
+    $('#saveCourses').submit(function() {        
+        removeTooltips();          
+
+        var date_start = $('input#id_date_start').attr('value');
+        var date_end = $('input#id_date_end').attr('value');
+        var name = $('input#id_name').attr('value');
+        var nameEN = $('input#id_nameEN').attr('value');
+        var intitution = $('input#id_institution').attr('value');
+
+        var serial = $(this).serialize();          
+
+        if(serial.indexOf("date_start=&date_end=")!=-1)            
+        {
+            serial=serial.replace("date_start=","date_start="+ date_start);
+            serial=serial.replace("date_end=","date_end="+ date_end);       
+        }
+                           
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: serial,          
+            success: function (data) {                
+                if (data.created == true){
+                    $('.errorMessageCourses').html('');
+                    if (language == "ES"){ $('.saveMessageCourses').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>El curso o seminario se guardó exitosamente.</div>'); }
+                    if (language == "EN"){ $('.saveMessageCourses').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Tha course/seminar was successfully saved.</div>'); }
+                    if (data.updated == true) {
+                        coursesListado = $.grep(coursesListado, function(item) {
+                            return data.id != item[0];
+                        }); 
+                    } else {
+                        if (language == "ES") { $('#saveCourses input[name="name"]').val(""); }
+                        if (language == "EN") { $('#saveCourses input[name="nameEN"]').val(""); }
+                        $('#saveCourses input[name="date_start"]').val("");
+                        $('#saveCourses input[name="date_end"]').val("");
+                        $('#saveCourses input[name="institution"]').val("");
+                    }
+                    coursesListado.push([data.id.toString(), data.name, data.id_institution, data.institution, data.date_start, data.date_end, data.nameEN]);
+                    showCourses(coursesListado, "success", data.id.toString());
+                } else {
+                    if (data[0].field == 'error'){
+                        $('.errorMessageCourses').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + data[0].msg + '</div>');
+                        $('.saveMessageCourses').html('');
+                    } else {
+                        $('.saveMessageCourses').html('');
+                        if (language == "ES") { $('.errorMessageCourses').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>El curso y/o seminario no ha sido guardado. Porfavor corrija los errores.</div>'); }
+                        if (language == "EN") { $('.errorMessageCourses').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>Not saved. Please correct the errors.</div>'); }
+                        show_errors(data);
+                        show_errors_all(data, '.errorMessageCourses');
+                    }
+                }
+            },
+            error: function(result) 
+            {
+                if(date_start=='') $('input#id_date_start').parent().parent().parent().addClass('error');
+                if(date_end=='') $('input#id_date_end').parent().parent().parent().addClass('error');                
+                if(intitution=='') $('input#id_institution').parent().parent().addClass('error');
+                if(name=='') $('input#id_name').parent().parent().addClass('error');
+                if( nameEN=='') $('input#id_nameEN').parent().parent().addClass('error');                                     
+
+                $('.saveMessageCourses').html('');
+                        if (language == "ES") { $('.errorMessageCourses').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>El curso y/o seminario no ha sido guardado. Porfavor corrija los errores.</div>'); }
+                        if (language == "EN") { $('.errorMessageCourses').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>Not saved. Please correct the errors.</div>'); }
+            }
+
+        });
+        return false;
+    });
+    
+
+
+    var decode_entities = (function() {
+        // Remove HTML Entities
+        var element = document.createElement('div');
+
+        function decode_HTML_entities (str) {
+
+            if(str && typeof str === 'string') {
+
+                // Escape HTML before decoding for HTML Entities
+                str = escape(str).replace(/%26/g,'&').replace(/%23/g,'#').replace(/%3B/g,';');
+
+                element.innerHTML = str;
+                if(element.innerText){
+                    str = element.innerText;
+                    element.innerText = '';
+                }else{
+                    // Firefox support
+                    str = element.textContent;
+                    element.textContent = '';
+                }
+            }
+            return unescape(str);
+        }
+        return decode_HTML_entities;
+    })();
+
+    $('.editCourse').live("click", function(e) {
+        removeTooltips();
+        $('.errorMessageCourses').html('');
+        $('.saveMessageCourses').html('');
+        var itemFound = findById(coursesListado, this.id);
+        showCourses(coursesListado, "warning", itemFound[0]);
+        if (language == "ES") { $('#saveCourses input[name="name"]').val(itemFound[1]); }
+        if (language == "EN") { $('#saveCourses input[name="nameEN"]').val(itemFound[6]); }
+        $("#saveCourses input[name='institution']").val(decode_entities(itemFound[3]));
+        $('#saveCourses input[name="date_start"]').val(itemFound[4]);
+        $('#saveCourses input[name="date_end"]').val(itemFound[5]);
+        $('#saveCourses').attr('action', '/curriculum/' + curriculumNumber + '/courses/edit_course/' + itemFound[0] + '/');
+        $('#controlsCourse').html('<button type="submit" class="btn btn-success" id="buttonCourse">Actualizar</button> <a class="btn" id="cancelCourseEdit">Cancelar</a>')
+    });
+
+    $('#cancelCourseEdit').live("click", function(e) {
+        removeTooltips();
+        $('.errorMessageCourses').html('');
+        $('.saveMessageCourses').html('');
+        if (language == "ES"){ $('#saveCourses input[name="name"]').val(""); }
+        if (language == "EN"){ $('#saveCourses input[name="nameEN"]').val(""); }
+        $("#saveCourses input[name='institution']").val("");
+        $('#saveCourses input[name="date_start"]').val("");
+        $('#saveCourses input[name="date_end"]').val("");
+        $('#saveCourses').attr('action', '/curriculum/' + curriculumNumber + '/courses/new_course/');
+        $('#controlsCourse').html('<button type="submit" class="btn btn-info" id="buttonCourse">Agregar</button>');
+        showCourses(coursesListado);
+    });
+
+    $('.deleteCourse').live("click", function(e) {
+        removeTooltips();
+        $('.errorMessageCourses').html('');
+        $('.saveMessageCourses').html('');
+        var itemFound = findById(coursesListado, this.id);
+        var date_end = itemFound[5];
+        var date_end_ES = date_end, date_end_EN = date_end;
+        if (!date_end) { date_end_ES = "la fecha", date_end_EN = "date"; }
+        if (language == "ES"){ $('#confirmDeleteCourses .modal-body').html("<p>¿Desea eliminar el curso <b>" + itemFound[1] +"</b> realizado en el centro de estudios <b>" + itemFound[3] + "</b> desde <b>" + itemFound[4] + "</b> hasta <b>" + date_end_ES + "</b>?</p>"); }
+        if (language == "EN"){ $('#confirmDeleteCourses .modal-body').html("<p>Are you sure to delete course <b>" + itemFound[1] +"</b> in <b>" + itemFound[3] + "</b> from <b>" + itemFound[4] + "</b> to <b>" + date_end_EN + "</b>?</p>"); }
+        $('#deleteCourses').attr('action', '/curriculum/' + curriculumNumber + '/courses/delete_course/' + itemFound[0] + '/');
+    });
+
+    $('#deleteCourses').submit(function() {
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                if (data.deleted == true){
+                    $('#cancelCourseEdit').click();
+                    $('.saveMessageCourses').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + data.msg + '</div>');
+                    coursesListado = $.grep(coursesListado, function(item) {
+                        return data.id != item[0];
+                    });
+                    showCourses(coursesListado);
+                } else {
+                    $('.errorMessageCourses').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + data[0].msg + '</div>');
+                    $('.saveMessageCourses').html('');
+                }
+            }
+        });
+	$('#confirmDeleteCourses').modal('hide');
+        return false;
+    });
+
+    function showCourses(items, type, id) {
+        type = type || "";
+        id = id || 0;
+        var data = "";
+        if (items.length == 0) {
+            if ( language == "ES"){
+                data = "No se tienen cursos y/o seminarios.";
+            }
+            else{
+                data = "You don't have courses/seminars.";
+            }
+        } else {
+            $('#dataCourses').addClass('show-results');
+            if (language == "ES"){ data =  data + "<table class='table table-striped table-condensed'><thead><tr><th>Nro.</th><th>Curso</th><th>Centro de estudios</th><th>Fecha de inicio</th><th>Fecha de término</th><th>Opciones</th></tr></thead><tbody>"; }
+            else { data =  data + "<table class='table table-striped table-condensed'><thead><tr><th>Num.</th><th>Course/seminar</th><th>Academic institution</th><th>Since</th><th>Until</th><th>Options</th></tr></thead><tbody>"; }
+            items.sort(compareOne);
+            jQuery.each(items, function(index) {
+                data = data + "<tr";
+                if (type != "") {
+                    if (id == this[0]) {
+                        data = data + " class='" + type + "'";
+                    }
+                }
+                data = data + "><td>";
+                data = data + (index + 1)
+                data = data + "</td>";
+                data = data + "<td>";
+                if (language == "ES"){ data = data + this[1]; }
+                if (language == "EN"){ data = data + this[6]; }
+                data = data + "</td>";
+                data = data + "<td>";
+                data = data + this[3];
+                data = data + "</td>";
+                data = data + "<td>";
+                data = data + this[4];
+                data = data + "</td>";
+                data = data + "<td>";
+                data = data + this[5];
+                data = data + "</td>";
+                data = data + "<td>";
+                if (language == "ES") { title_edit="Editar", title_delete="Eliminar"; }
+                if (language == "EN") { title_edit="Edit", title_delete="Delete"; }
+                if (type == "error") {
+                    if (id == this[0]) {
+                        data = data + "";
+                    } else {
+                        data = data + "<a class='editCourse' data-original-title='" + title_edit + "' rel='tooltip' id='";
+                        data = data + this[0];
+                        data = data + "'><i class='icon-pencil'></i></a>";
+                        data = data + "&nbsp;<a data-toggle='modal' href='#confirmDeleteCourses' data-original-title='" + title_delete + "' rel='tooltip' class='deleteCourse' id='";
+                        data = data + this[0];
+                        data = data + "'><i class='icon-remove'></i></a>";
+                    }
+                } else {
+                    data = data + "<a class='editCourse' data-original-title='" + title_edit + "' rel='tooltip' id='";
+                    data = data + this[0];
+                    data = data + "'><i class='icon-pencil'></i></a>";
+                    data = data + "&nbsp;<a data-toggle='modal' href='#confirmDeleteCourses' data-original-title='" + title_delete + "' rel='tooltip' class='deleteCourse' id='";
+                    data = data + this[0];
+                    data = data + "'><i class='icon-remove'></i></a>";
+                }
+                data = data + "</td>";
+            });
+            data = data + "</tbody></table>";
+        }
+        $('#dataCourses').html(data);
+    }
+
+    /* --- */
+
+    /* Professional Profile, Computing Knowledge, Additional Information */
+
+    $('#professionalProfileSave').submit(function() {
+        if ($('#buttonProfessionalProfile').hasClass('disabled')){ return false; }
+        removeTooltips();
+        $('.errorProfessionalProfile').html('');
+        $('.saveProfessionalProfile').html('');
+
+        var obj = $(this).toObject();
+        obj.profile_description = tinymce.get('professionalProfileTinyMCE').getContent();
+        var payload = JSON.stringify(obj);
+
+        if(obj.profile_description == ""){
+            $('.saveProfessionalProfile').html('');
+            if (language == "ES")
+                $('.errorProfessionalProfile').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>Debe ingresar una descripción</div>');
+            else
+                $('.errorProfessionalProfile').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>You must enter a description</div>');
+            return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            data: payload,
+            contentType: 'application/json',
+            success: function (data) {
+                if (data.updated == true){
+                    $('.errorProfessionalProfile').html('');
+                    if (language == "ES"){  $('.saveProfessionalProfile').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Su perfil profesional se guardó exitosamente.</div>'); }
+                    else { $('.saveProfessionalProfile').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>The professional profile was successfully saved.</div>'); }
+                } else {
+                        msg = 'Debe ingresar su perfil profesional.';
+                    if (language == "EN") { msg = 'Must enter their professional profile.'; }
+                    if (data.msg) { msg= data.msg; }
+                    $('.saveProfessionalProfile').html('');
+                    $('.errorProfessionalProfile').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                }
+            }
+        });
+        return false;
+    });
+
+    $('#achievementSave').submit(function() {
+        removeTooltips();
+        $('.errorProfessionalProfile').html('');
+        $('.saveProfessionalProfile').html('');
+        $('.errorAchievement').html('');
+        $('.saveAchievement').html('');
+        var obj = $(this).toObject();
+        var payload = JSON.stringify(obj);
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            data: payload,
+            contentType: 'application/json',
+            success: function (data) {
+                if (data.created == true){
+                    removeTooltips();
+                    $('#achievementSave')[0].reset();
+                    $('.control-group').removeClass('error');
+                    $('#achievementTable tr').removeClass('warning success');
+                    if (language == "ES"){
+                        $('#achievementTable').append('<tr class="success" id="achievementRow' + data.id + '"><td></td><td>' + data.achievement + '</td><td><a class="confirmDeleteAchievement achievement' + data.id + '" data-toggle="modal" href="#confirmDeleteAchievement" data-original-title="Eliminar" rel="tooltip"><i class="icon-remove"></i></a></td></tr>');
+                        $('.saveAchievement').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>El logro alcanzado se guardó exitosamente.</div>');
+                    }
+                    else {
+                        $('#achievementTable').append('<tr class="success" id="achievementRow' + data.id + '"><td></td><td>' + data.achievement + '</td><td><a class="confirmDeleteAchievement achievement' + data.id + '" data-toggle="modal" href="#confirmDeleteAchievement" data-original-title="Delete" rel="tooltip"><i class="icon-remove"></i></a></td></tr>');
+                        $('.saveAchievement').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>The achievement was successfully saved.</div>');
+                    }
+                    set_table_index_numbers('achievementTable');
+                } else {
+                    show_errors(data);
+                    if (language == "ES"){ $('.errorAchievement').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>No se ha podido guardar. Porfavor corrija los errores.</div>'); }
+                    else { $('.errorAchievement').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>Not saved. Please correct the errors.</div>'); }
+                }
+            }
+        });
+        return false;
+    });
+
+    $('a.confirmDeleteAchievement').live("click", function (e){
+        $('.saveAchievement').html('');
+        removeTooltips();
+        var id = String($(this).attr('class').match(/achievement[0-9]+/g)).replace(/achievement/, "");
+        var arr = new Array();
+        $('#deleteAchievement').append('<input type="hidden" name="id" value="' + id + '"/>');
+        $('#achievementRow' + id + ' td').each(function (){
+            arr.push($(this).text());
+        });
+    });
+
+    $('.deleteAchievement').click(function (e){
+        e.preventDefault();
+        var obj = $('#deleteAchievement').toObject();
+        var payload = JSON.stringify(obj);
+        $.ajax({
+            type: 'POST',
+            url: $('#deleteAchievement').attr('action'),
+            data: payload,
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function(data) {
+                if (data == true){
+                    $('#confirmDeleteAchievement').modal('hide');
+                    $('#achievementRow' + obj.id).remove();
+                    set_table_index_numbers('achievementTable');
+                    msg = 'El logro se eliminó exitosamente.'
+                    if (language == 'EN') { msg = 'The achievement was successfully deleted'; }
+                    $('.saveAchievement').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                }
+            }
+        });
+    });
+
+    $('#computingSkillSave').submit(function() {
+        removeTooltips();
+        $('.errorComputingKnowledge').html('');
+        $('.saveComputingKnowledge').html('');
+        $('.errorComputingSkill').html('');
+        $('.saveComputingSkill').html('');
+        var obj = $(this).toObject();
+        var payload = JSON.stringify(obj);
+        var form = $(this);
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            data: payload,
+            contentType: 'application/json',
+            success: function (data) {
+                if (data.created == true){
+                    removeTooltips();
+                    $('#computingSkillSave')[0].reset();
+                    $('.control-group').removeClass('error');
+                    $('#computingSkillTable tr').removeClass('warning success');
+                    $('#selectAllComputingSkills').removeAttr('checked');
+
+                    if (data.updated == true)
+                    {
+                        var rowToUpdate = $('#'+ form.data('skillRowId'));
+                        console.log(rowToUpdate);
+                        console.log(data.description);
+                        rowToUpdate.find('td:nth-child(2)').html(data.skill);
+                        rowToUpdate.find('td:nth-child(3)').html(data.level);
+                        rowToUpdate.find('td:nth-child(4)').html(data.description);
+
+                        if (language == "ES"){
+                            $('#controlsComputingSkill').html('<button type="submit" class="btn btn-success" id="buttonCourse">Agregar</button>')
+                        }
+                        else{
+                            $('#controlsComputingSkill').html('<button type="submit" class="btn btn-success" id="buttonCourse">Add</button>')   
+                        }
+                    }
+                    else
+                    {
+                        if (language == "ES"){
+                            $('#computingSkillTable').append('<tr class="success" id="computingSkillRow' + data.id + '"><td></td><td>' + data.nameES + '</td><td>' + data.level + '</td><td>' + data.custom + '</td><td><a class="confirmDeleteComputingSkill computing' + data.id + '" data-toggle="modal" href="#confirmDeleteComputingSkill" data-original-title="Eliminar" rel="tooltip"><i class="icon-remove"></i></a></td></tr>');
+                            $('.saveComputingSkill').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>La habilidad se guardó exitosamente.</div>');
+                        }
+                        else {
+                            var level = "Basic";
+                            if (data.level_id == 2){ level = "Intermediate";}
+                            if (data.level_id == 3){ level = "Advanced";}
+                            $('#computingSkillTable').append('<tr class="success" id="computingSkillRow' + data.id + '"><td></td><td>' + data.nameES + '</td><td>' + level + '</td><td>' + data.custom + '</td><td><a class="confirmDeleteComputingSkill computing' + data.id + '" data-toggle="modal" href="#confirmDeleteComputingSkill" data-original-title="Delete" rel="tooltip"><i class="icon-remove"></i></a></td></tr>');
+                            $('.saveComputingSkill').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>The skill was successfully saved.</div>');
+                        }
+                        set_table_index_numbers('computingSkillTable');
+                    }
+                } else {
+                    show_errors(data);
+                    if (language == "ES"){ $('.errorComputingSkill').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>No se ha podido guardar. Porfavor corrija los errores.</div>'); }
+                    else { $('.errorComputingSkill').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>Not saved. Please correct the errors.</div>'); }
+                }
+            }
+        });
+        return false;
+    });
+
+    $('a.confirmDeleteComputingSkill').live("click", function (e){
+        $('.saveComputingKnowledge').html('');
+        $('.errorComputingKnowledge').html('');
+        $('.errorComputingSkill').html('');
+        $('.saveComputingSkill').html('');
+        removeTooltips();
+        var id = String($(this).attr('class').match(/computing[0-9]+/g)).replace(/computing/, "");
+        var arr = new Array();
+        $('#deleteComputingSkill').append('<input type="hidden" name="id" value="' + id + '"/>');
+        $('#computingSkillRow' + id + ' td').each(function (){
+            arr.push($(this).text());
+        });
+        if ( language == "ES"){ $('p.deleteComputingSkill').html('Desea eliminar la habilidad <b>' + arr[1] + '</b> de nivel <b>' + arr[2] + '</b>?'); }
+        else { $('p.deleteComputingSkill').html('Are you sure to delete the skill <b>' + arr[1] + '</b> level <b>' + arr[2] + '</b>?'); }
+    });
+
+    $('#buttonDeleteComputingSkill').click(function (e){
+        removeTooltips();
+        var obj = $('#deleteComputingSkill').toObject();
+        var payload = JSON.stringify(obj);
+        $.ajax({
+            type: 'POST',
+            url: $('#deleteComputingSkill').attr('action'),
+            data: payload,
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function(data) {
+                if (data == true){
+                    $('#confirmDeleteComputingSkill').modal('hide');
+                    $('#computingSkillRow' + obj.id).remove();
+                    set_table_index_numbers('computingSkillTable');
+                    $('#computingSkillTable tr').removeClass('warning success');
+                    if (language == "ES"){ $('.saveComputingSkill').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>La habilidad se eliminó exitosamente.</div>'); }
+                    else{ $('.saveComputingSkill').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>The skill was successfully saved.</div>'); }
+                }
+            }
+        });
+    });
+
+    $('#computingKnowledgeSave').submit(function() {
+        if ($('#buttonComputingKnowledge').hasClass('disabled')){ return false; }
+        removeTooltips();
+        $('.errorComputingKnowledge').html('');
+        $('.saveComputingKnowledge').html('');
+        $('.errorComputingSkill').html('');
+        $('.saveComputingSkill').html('');
+        var obj = $(this).toObject();
+        obj.computing_knowledge = tinymce.get('computingKnowledgeTinyMCE').getContent();
+        var payload = JSON.stringify(obj);
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            data: payload,
+            contentType: 'application/json',
+            success: function (data) {
+                if (data.updated == true){
+                    $('.errorComputingKnowledge').html('');
+                    if (language == "ES"){ $('.saveComputingKnowledge').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Su conocimiento en informática se guardó exitosamente</div>'); }
+                    else { $('.saveComputingKnowledge').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>The computing knowledge was successfully saved</div>'); }
+                } 
+                else {
+                    msg = 'Debe ingresar sus conocimientos de informática.';
+                    if (language == "EN") { msg = 'Must enter their computer skill description.'; }
+                    if (data.msg) { msg= data.msg; }
+                    $('.saveComputingKnowledge').html('');
+                    $('.errorComputingKnowledge').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                }
+            }
+        });
+        return false;
+    });
+
+   $('a.editComputingSkill').live("click", function (e){
+        e.preventDefault();        
+        console.log($(this));
+        var id = String($(this).attr('class').match(/computing[0-9]+/g)).replace(/computing/, "");        
+        var url = $(this).data('url');        
+        var urlEdit = $(this).data('urledit');                 
+        var skillRowId = $(this).parent().parent().attr('id');
+        $.ajax({
+            type: 'POST',
+            url: url,            
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function(data) {                                
+                $('input#id_nameES').val(data.skill);               
+                $('input#id_custom').val(data.description);             
+                $('#computingSkillSave').attr('action',urlEdit);
+                $('#computingSkillSave').data('skillRowId',skillRowId); 
+
+                $('#computingSkillSave select[name="level"] option')[data.id_level - 1].selected = true;
+
+                $('#controlsComputingSkill').html('<button type="submit" class="btn btn-success" id="buttonCourse">Actualizar</button> <a class="btn" id="cancelCourseEdit">Cancelar</a>')
+            }
+        });
+    });
+
+
+    $('#additionalInformationSave').submit(function() {
+        if ($('#buttonAdditionalInformation').hasClass('disabled')){ return false; }
+        removeTooltips();
+        $('.errorAdditionalInformation').html('');
+        $('.saveAdditionalInformation').html('');
+        var obj = $(this).toObject();
+        obj.additional_information = tinymce.get('additionalInformationTinyMCE').getContent();
+        var payload = JSON.stringify(obj);
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            data: payload,
+            contentType: 'application/json',
+            success: function (data) {
+                if (data.updated == true){
+                    $('.errorAdditionalInformation').html('');
+                    if (language == "ES"){ $('.saveAdditionalInformation').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Información adicional actualizada con éxito.</div>'); }
+                    else { $('.saveAdditionalInformation').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>The additional information was successfully saved.</div>'); }
+                } else {
+                    msg = 'Debe ingresar su información adicional.';
+                    if (language == "EN") { msg = 'Must enter their additional information.'; }
+                    if (data.msg) { msg= data.msg; }
+                    $('.saveAdditionalInformation').html('');
+                    $('.errorAdditionalInformation').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg +'</div>');
+                }
+            }
+        });
+        return false;
+    });
+
+
+    $('#portfolioEntrySaveForm').submit(function (e) {        
+        e.preventDefault();
+        removeTooltips();
+        var obj = $(this).toObject();
+        obj.url = encodeURIComponent(obj.url);
+        var payload = JSON.stringify(obj);
+
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            data: payload,
+            contentType: 'application/json',
+            success: function (data) {
+                if (data.saved == true){
+                    $('.errorMessagePortfolio').html('');
+                    if(data.updated) {
+                        portfolioListado = $.grep(portfolioListado, function (item) {
+                            return data.id != item[0];
+                        });
+                        $('#portfolioRow'+data.id).html('<td></td><td>' + data.description + '</td><td><a href="' + data.url + '">' + data.url + '</a></td><td><a class="editPortfolio portfolio' + data.id + '" id="' + data.id + '"href="javascript:;" data-original-title="Editar" rel="tooltip"><i class="icon-pencil" style="margin-right: 4px; "></i></a><a class="confirmDeletePortfolio portfolio' + data.id + '" id="' + data.id + '" data-toggle="modal" href="#confirmDeletePortfolio" data-original-title="Eliminar" rel="tooltip"><i class="icon-remove"></i></a></td>');
+                    } else {
+                        $('#portfolioEntrySaveForm input[name="description"]').val("");
+                        $('#portfolioEntrySaveForm input[name="url"]').val("");
+                        $('#portfolioTable').append('<tr class="success" id="portfolioRow' + data.id + '"><td></td><td>' + data.description + '</td><td><a href="' + data.url + '">' + data.url + '</a></td><td><a class="editPortfolio portfolio' + data.id + '" id="' + data.id + '"href="javascript:;" data-original-title="Editar" rel="tooltip"><i class="icon-pencil" style="margin-right: 4px; "></i></a><a class="confirmDeletePortfolio portfolio' + data.id + '" id="' + data.id + '" data-toggle="modal" href="#confirmDeletePortfolio" data-original-title="Eliminar" rel="tooltip"><i class="icon-remove"></i></a></td></tr>');
+                    }
+                    $('#cancelPortfolioEdit').click();
+                    portfolioListado.push([data.id.toString(), data.description, data.url]);
+                    set_table_index_numbers('portfolioTable');
+                    msg = 'Información guardada con éxito.';
+                    if (language == "EN") { msg = 'Information successfully saved.'; }
+                    $('.saveMessagePortfolio').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                } else {
+                    $('.saveMessagePortfolio').html('');
+                    msg = 'No ha sido guardado. Por favor corrija los errores.';
+                    if (language == "EN"){ msg = 'Not saved. Please correct the errors.'; }
+                    if (data[2]){ if ('error' in data[2]){ msg = data[2].error; } }
+                    $('.errorMessagePortfolio').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                    show_errors(data);
+                    show_errors_all(data, '.errorMessagePortfolio');
+                }
+            }
+        });
+        return false;
+    });
+
+    $('.editPortfolio').live("click", function(e) {
+        removeTooltips();
+        $('.errorMessagePortfolio').html('');
+        $('.saveMessagePortfolio').html('');
+        var itemFound = findById(portfolioListado, this.id);
+        $("#portfolioEntrySaveForm input[name='description']").val(itemFound[1]);
+        $("#portfolioEntrySaveForm input[name='url']").val(itemFound[2]);
+        updateButton = 'Actualizar';
+        cancelButton = 'Cancelar';
+        if (language == "EN") {
+            updateButton = 'Update';
+            cancelButton = 'Cancel';
+        }
+        $('#portfolioControls').html('<button type="submit" class="btn btn-success" id="updatePortfolio">' + updateButton + '</button> <a class="btn" id="cancelPortfolioEdit">' + cancelButton + '</a>');
+        $("#portfolioUpdateID").html('<input type="hidden" name="id" value="' + this.id + '"/>');
+    });
+
+    $('#cancelPortfolioEdit').live('click', function(e){
+        removeTooltips();
+        $('.errorMessagePortfolio').html('');
+        $('.saveMessagePortfolio').html('');
+        $("#portfolioEntrySaveForm input[name='description']").val('');
+        $("#portfolioEntrySaveForm input[name='url']").val('');
+        $('#portfolioControls').html('<button type="submit" class="btn btn-info" id="buttonPortfolio">Agregar</button>');
+        $("#portfolioUpdateID").html('');
+    });
+
+    $('a.confirmDeletePortfolio').live("click", function (e) {
+        removeTooltips();
+        $('.errorMessagePortfolio').html('');
+        $('.saveMessagePortfolio').html('');
+        $("#portfolioDeleteID").html('<input type="hidden" name="id" value="'+ this.id +'"/>');
+    });
+
+    $('.deletePortfolio').click(function (e){
+        e.preventDefault();
+        var obj = $('#deletePortfolio').toObject();
+        var payload = JSON.stringify(obj);
+        $.ajax({
+            type: 'POST',
+            url: $('#deletePortfolio').attr('action'),
+            data: payload,
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            success: function(data) {
+                if (data == true){
+                    $('#confirmDeletePortfolio').modal('hide');
+                    $('#portfolioRow' + obj.id).remove();
+                    set_table_index_numbers('portfolioTable');
+                    $('#cancelPortfolioEdit').click();
+                    msg = 'El enlace se eliminó exitosamente.';
+                    if (language == "EN") { msg = 'Entry deleted successfully.'; }
+                    $('.saveMessagePortfolio').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+                }
+            }
+        });
+    });
+
+    $('.date').datepicker().on('changeDate',function(){
+
+        $(this).datepicker('hide');
+    });
+
+});

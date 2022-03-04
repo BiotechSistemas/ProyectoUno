@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ext:UBLExtensions>
+    <ext:UBLExtension>
+      <ext:ExtensionContent>
+      <Signature Id="Sunat" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>OJQmy1UTxuF5wtnhsr/QUQKcKDU=</DigestValue></Reference></SignedInfo><SignatureValue>vLhFUAkv2lJietJeOM2G7hQrd5eqZef4P/RVPys4g4kXxqRo30K2yPRHdnns+4/EeMMWJlaXXkfzertq1poDDaYofqy3Jp3kPgY3nrPFEhXpLxoI5vhTZH5PxlUWN9ke3bIWWFSQKNUW03JW9qX203I3K3ydX+yACTLBhOJKIPtfBwdDrj5P6INQJCB/jN8vG+5C5MZPkjdf5G8f3pxfIAe3URA6wxnJ0a5oFAmHE9eQX2L+soHYNAIOenaj0ZaFlwkYzULS7XNrIkvTksDWsDUYNusxpbxsdZehM8jXjv5bLxecOMBlTKrLHwDW2ASNstPsLGrajPMDVUn1eYEUkQ==</SignatureValue><KeyInfo><X509Data><X509SubjectName>C=PE, O=BIOTECH CORP S.A.C., OID.2.5.4.97=20601613396, OU=Issued by SENDA TI SOLUTIONS [PE1], OU=GERENTE, T=GERENTE GENERAL, S=LIMA - LIMA, L=SANTIAGO DE SURCO, SERIALNUMBER=DNI:40052921, SN=CHAVEZ CALDERON, G=DANNY WILLIAMS, CN=DANNY WILLIAMS CHAVEZ CALDERON, E=danny.chavez@biotechcorp.com.pe</X509SubjectName><X509Certificate>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</X509Certificate></X509Data></KeyInfo></Signature></ext:ExtensionContent>
+    </ext:UBLExtension>
+  </ext:UBLExtensions>
+  
+  <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+  <cbc:CustomizationID>2.0</cbc:CustomizationID>
+  <cbc:ID>F001-00000542</cbc:ID>
+  <cbc:IssueDate>2018-12-01</cbc:IssueDate>
+  <cbc:IssueTime>05:00:00.0000000-05:00</cbc:IssueTime>
+  <cbc:DueDate>2019-04-30</cbc:DueDate>
+  <cbc:InvoiceTypeCode listID="0101" listAgencyName="PE:SUNAT" listName="SUNAT:Identificador de Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">01</cbc:InvoiceTypeCode>
+  <cbc:Note languageLocaleID="1000">SON TRES MIL OCHOCIENTOS TREINTA Y SIETE CON 95/100 DÓLARES AMERICANOS</cbc:Note>
+  <cbc:DocumentCurrencyCode listID="ISO 4217 Alpha" listName="Currency" listAgencyName="United Nations Economic Commission for Europe">USD</cbc:DocumentCurrencyCode>
+
+  <cac:OrderReference>
+    <cbc:ID></cbc:ID>
+  </cac:OrderReference>
+    
+  <cac:DespatchDocumentReference>
+    <cbc:ID>T001-510,T001-530,T001-588,T001-593</cbc:ID>
+    <cbc:DocumentTypeCode>09</cbc:DocumentTypeCode>
+  </cac:DespatchDocumentReference>
+  
+   <cac:Signature>
+    <cbc:ID>20601613396</cbc:ID>
+    <cac:SignatoryParty>
+      <cac:PartyIdentification>
+        <cbc:ID>20601613396</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name><![CDATA[BIOTECH CORP S.A.C.]]></cbc:Name>
+      </cac:PartyName>
+    </cac:SignatoryParty>
+    <cac:DigitalSignatureAttachment>
+      <cac:ExternalReference>
+        <cbc:URI>20601613396</cbc:URI>
+      </cac:ExternalReference>
+    </cac:DigitalSignatureAttachment>
+  </cac:Signature>
+
+ 
+  
+  <cac:AccountingSupplierParty>
+    <cac:Party>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="6" schemeName="SUNAT:Identificador de Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">20601613396</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>BIOTECH CORP S.A.C.</cbc:Name>
+      </cac:PartyName>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>BIOTECH CORP S.A.C.</cbc:RegistrationName>
+        <cac:RegistrationAddress>
+          <cac:AddressLine>
+            <cbc:Line>AV. EL POLO NRO.401 URB. MONTERRICO INT. 301 </cbc:Line>
+          </cac:AddressLine>
+          <cac:Country>
+            <cbc:IdentificationCode>PE</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:RegistrationAddress>
+      </cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:AccountingSupplierParty>
+
+  <cac:AccountingCustomerParty>
+    <cac:Party>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="6" schemeName="SUNAT:Identificador de Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">20307758645</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName><![CDATA[SOCIEDAD AGRICOLA SATURNO S.A.]]></cbc:RegistrationName>
+      </cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:AccountingCustomerParty>
+
+  
+  
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="USD">585.45</cbc:TaxAmount>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="USD">3252.5</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="USD">585.45</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cac:TaxScheme>
+          <cbc:ID>1000</cbc:ID>
+          <cbc:Name>IGV</cbc:Name>
+          <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+        </cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+  </cac:TaxTotal>
+    
+    
+  <cac:LegalMonetaryTotal>
+    <cbc:LineExtensionAmount currencyID="USD">3252.5</cbc:LineExtensionAmount>
+    <cbc:TaxInclusiveAmount currencyID="USD">3837.95</cbc:TaxInclusiveAmount>
+    <cbc:AllowanceTotalAmount currencyID="USD">0.00</cbc:AllowanceTotalAmount>
+    <cbc:ChargeTotalAmount currencyID="USD">0.00</cbc:ChargeTotalAmount>
+    <cbc:PayableAmount currencyID="USD">3837.95</cbc:PayableAmount>
+  </cac:LegalMonetaryTotal>
+    
+   <cac:InvoiceLine>
+  <cbc:ID>1</cbc:ID>
+  <cbc:InvoicedQuantity unitCode="NIU">5</cbc:InvoicedQuantity>
+  <cbc:LineExtensionAmount currencyID="USD">752.5</cbc:LineExtensionAmount>
+  <cac:PricingReference>
+    <cac:AlternativeConditionPrice>
+      <cbc:PriceAmount currencyID="USD">177.59</cbc:PriceAmount>
+      <cbc:PriceTypeCode>01</cbc:PriceTypeCode>
+    </cac:AlternativeConditionPrice>
+  </cac:PricingReference>
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="USD">135.45</cbc:TaxAmount>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="USD">752.5</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="USD">135.45</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cbc:Percent>18.00</cbc:Percent>
+        <cbc:TaxExemptionReasonCode>10</cbc:TaxExemptionReasonCode>
+        <cac:TaxScheme>
+          <cbc:ID>1000</cbc:ID>
+          <cbc:Name>IGV</cbc:Name>
+          <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+        </cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+  </cac:TaxTotal>
+  <cac:Item>
+    <cbc:Description><![CDATA[BIO WETT - 20 L]]></cbc:Description>
+  </cac:Item>
+  <cac:Price>
+    <cbc:PriceAmount currencyID="USD">150.5</cbc:PriceAmount>
+  </cac:Price>
+</cac:InvoiceLine><cac:InvoiceLine>
+  <cbc:ID>2</cbc:ID>
+  <cbc:InvoicedQuantity unitCode="NIU">1</cbc:InvoicedQuantity>
+  <cbc:LineExtensionAmount currencyID="USD">2500</cbc:LineExtensionAmount>
+  <cac:PricingReference>
+    <cac:AlternativeConditionPrice>
+      <cbc:PriceAmount currencyID="USD">2950</cbc:PriceAmount>
+      <cbc:PriceTypeCode>01</cbc:PriceTypeCode>
+    </cac:AlternativeConditionPrice>
+  </cac:PricingReference>
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="USD">450</cbc:TaxAmount>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="USD">2500</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="USD">450</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cbc:Percent>18.00</cbc:Percent>
+        <cbc:TaxExemptionReasonCode>10</cbc:TaxExemptionReasonCode>
+        <cac:TaxScheme>
+          <cbc:ID>1000</cbc:ID>
+          <cbc:Name>IGV</cbc:Name>
+          <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+        </cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+  </cac:TaxTotal>
+  <cac:Item>
+    <cbc:Description><![CDATA[BIOAMIN - 200 L]]></cbc:Description>
+  </cac:Item>
+  <cac:Price>
+    <cbc:PriceAmount currencyID="USD">2500</cbc:PriceAmount>
+  </cac:Price>
+</cac:InvoiceLine>
+
+</Invoice>

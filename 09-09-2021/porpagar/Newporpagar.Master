@@ -1,0 +1,110 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Newporpagar.master.cs" Inherits="biotech.porpagar.Newporpagar" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Biotech</title>
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">
+          <asp:Image ID="Image1" runat="server" ImageAlign="Middle" ImageUrl="~/images/logobio3.png" Width="170px" />
+        <asp:Label ID="lblnivel10" runat="server" Visible="False"></asp:Label>
+        </a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+     
+       
+        <%--<li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Page 1-1</a></li>
+            <li><a href="#">Page 1-2</a></li>
+            <li><a href="#">Page 1-3</a></li>
+          </ul>
+        </li>--%>
+        <ul class="nav navbar-nav navbar-right">
+             <li><a href="Pagos_ctaporpagar.aspx"><span class="glyphicon glyphicon-refresh"></span> ACTUALIZAR</a></li>
+            
+                 <%--<li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> Principal</a></li>--%>
+            <%--<li><a href="OcAprobar.aspx">APROBACIONES</a></li>--%>
+       
+<li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">CENTRO DE COSTO<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+           
+            <li><a href="../bio/ventas/compras/AdminCCA.aspx">Dirigir CC</a></li>
+              <li><a href="../bio/ventas/compras/CCAregistrar.aspx">Administrar</a></li>
+              <li><a href="CCA.aspx">Resumen</a></li>
+
+             
+          </ul>
+        </li>
+
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">CTA. POR PAGAR<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+           
+            <li><a href="../bio/ventas/compras/PagosRegistrar.aspx">Registrar cuenta</a></li>
+              <li><a href="../bio/ventas/compras/PagosFacturados.aspx">Facturar cuenta</a></li>
+              <li><a href="../bio/ventas/compras/Proveedor.aspx">Registrar Proveedor</a></li>
+
+              <li><a href="Compras_facturas.aspx">Compras - Facturas</a></li>
+
+               <%--<li><a href="CCA.aspx">Centro Costo Adm.</a></li>--%>
+
+            <li><a href="Pagos_historial.aspx">P. Realizados<span class="badge pull-right"><asp:Label ID="lblcantpagosrealizados" runat="server" Text="10"></asp:Label></span></a></li>
+          </ul>
+        </li>
+       
+        <%--<li><a href="#">Page 3</a></li>--%>
+
+             <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">COMPRAS INTERNAS<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="ComprasInternas.aspx">Registrar</a></li>
+              <li><a href="ComprasInternas_resumen.aspx">Resumen Mensual </a></li>
+               <li><a href="Compras_Resumen.aspx">Resuman General</a></li>
+          </ul>
+          </li>
+
+      <%--<li><a href="">COMPRAS INTERNAS</a></li>--%>
+      
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span></a></li>
+         <li><asp:LinkButton ID="lbSalir" runat="server" OnClick="lbSalir_Click"><span class="glyphicon glyphicon-log-in"></span> SALIR</asp:LinkButton></li>
+             <%--<li><a href="../admin/Default.aspx"><span class="glyphicon glyphicon-log-in"></span> Salir</a></li>--%>
+      </ul>
+    </div>
+  </div>
+</nav>
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+            <asp:Label ID="lblnivelPrincipal" runat="server" Visible="False"></asp:Label>
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

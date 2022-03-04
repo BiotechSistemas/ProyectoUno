@@ -1,0 +1,483 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterVentas.master.cs" Inherits="biotech.bio.ventas.MasterVentas" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <link rel="icon" type="image/png" href="http://www.biotechcorp.com.pe/webapp/logoicono.png" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Bio Clientes</title>
+    
+    
+    
+   
+
+
+
+
+     <!-- Bootstrap Core CSS -->
+    <link href="/bio/vendorF/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/bio/vendorF/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/bio/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="/bio/vendorF/morrisjs/morris.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="/bio/vendorF/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+   
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+
+
+
+   <style type="text/css">
+
+       .navbar-default .nav li a{
+  color: #808080;
+}
+
+/*Mouse encima*/
+.navbar-default .nav li a:hover{
+  color: #05a808;
+}
+    
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+       
+        <div id="wrapper">
+
+        <!-- Navigation -->
+            <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+               <asp:Image ID="Image1" runat="server" ImageAlign="Middle" ImageUrl="~/images/logobio3.png" Width="180px" Height="40px" />
+          
+
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+        
+          <ul class="nav navbar-nav navbar-right">
+
+               <li class="dropdown">
+                   <%-- <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-unlink fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>--%>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            
+                              <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="codTrabajador" DataSourceID="SqlDataSourceHonomastico" Font-Size="XX-Small" GridLines="Horizontal">
+                <Columns>
+                    <asp:BoundField DataField="codTrabajador" HeaderText="codTrabajador" ReadOnly="True" SortExpression="codTrabajador" Visible="False" />
+                    <asp:BoundField DataField="PERSONAL" HeaderText="PERSONAL" ReadOnly="True" SortExpression="PERSONAL" >
+                    <HeaderStyle Width="120px" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="HONOMASTICO" ReadOnly="True" SortExpression="HONOMASTICO">
+                    <ItemStyle HorizontalAlign="Right" VerticalAlign="Middle" />
+                    </asp:BoundField>
+                </Columns>
+            </asp:GridView>
+            <asp:SqlDataSource ID="SqlDataSourceHonomastico" runat="server" ConnectionString="<%$ ConnectionStrings:CorporacionAgroConnectionString %>" SelectCommand="st_honomasticosPendientes" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+ 
+
+                        </li>
+                        
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+
+      
+
+           <%--<li >--%>
+               
+                <asp:LinkButton ID="lbUsuarioMaster" runat="server" OnClick="lbUsuarioMaster_Click" Visible="False"></asp:LinkButton>
+                   
+                 <%--</li>--%>   
+               <li >
+               
+                <asp:LinkButton ID="lbtnAdminPerfil" runat="server" OnClick="lbtnAdminPerfil_Click"><i class='fa fa-user fa-fw'></i>Administrar ficha personal</asp:LinkButton>
+                   
+                 </li> 
+
+                <li>                   
+                 <asp:LinkButton ID="lbSalir" runat="server" OnClick="lbSalir_Click"><i class="fa fa-power-off fa-fw"></i> Salir</asp:LinkButton>                                     
+                </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+            
+               
+
+
+            <div class="navbar-default sidebar" role="navigation">
+ <center>
+                          <asp:Panel ID="pfoto" runat="server" Width="70%">
+                                &nbsp;<asp:ImageButton class="img-thumbnail" ID="ImageButton1" runat="server" Height="200px" ImageUrl="~/_archivos/PersonalFotos/NOIND.jpg" Width="100%" OnClick="ImageButton1_Click1" ToolTip="Ver ficha personal" />
+                              
+                          </asp:Panel>
+                          <br />
+                       </center> 
+                <div class="sidebar-nav navbar-collapse">
+                   
+                   
+                   <ul class="nav in" id="side-menu">
+                     
+                        <li>
+                            <asp:LinkButton ID="lbPrincipal" runat="server" OnClick="lbPrincipal_Click" PostBackUrl="~/bio/ventas/Default.aspx"><i class="fa fa-sitemap fa-fw"></i> Principal</asp:LinkButton>
+                        </li>
+                       <asp:Panel ID="PanelAlmacen" runat="server" CssClass="nav">
+                        <li>
+                            <asp:LinkButton ID="lbalmacen" runat="server" PostBackUrl="~/Almacen/WebForm1.aspx"><i class="fa fa-edit fa-fw"></i> Almacen</asp:LinkButton>
+                            
+                        </li>
+
+                       </asp:Panel>
+                      
+                        <li>                          
+                            <asp:LinkButton ID="lbGrupoVentas" runat="server" OnClick="lbGrupoVentas_Click"><i class="fa fa-copy fa-fw"></i> Ventas<span class="fa arrow"></span></asp:LinkButton>
+                            <ul class="nav nav-second-level"> 
+                                <asp:Panel ID="PanelVentas" runat="server" class="nav" >                           
+                                 <li>
+                                    <asp:LinkButton ID="LinkButton1" runat="server" OnClick="lbGrupoVentas_Click"><i class="fa fa-copy fa-fw"></i> Facturación<span class="fa arrow"></span></asp:LinkButton>
+                                    <ul class="nav nav-third-level">
+                                   <li>
+                                    <asp:LinkButton ID="lbmuestras" runat="server"  PostBackUrl="~/bio/ventas/FactLetra/PedMuestras.aspx" ><i class="fa fa-edit fa-fw"></i>A.Muestras</asp:LinkButton>                                
+                                </li>
+                                 <li>
+                                    <asp:LinkButton ID="lbPedidos" runat="server"  PostBackUrl="~/bio/ventas/FactLetra/NotaPedido.aspx" ><i class="fa fa-edit fa-fw"></i>B.Nota de Pedidos</asp:LinkButton>                                
+                                </li> 
+                                    <li>
+                                    <asp:LinkButton ID="lbGuiaRemision" runat="server"  PostBackUrl="~/bio/ventas/FactLetra/GuiaRemision.aspx" ><i class="fa fa-edit fa-fw"></i>C.Guia Remisión</asp:LinkButton>                                
+                                    </li>
+                                    <li>
+                                        <asp:LinkButton ID="lbFacturas" runat="server"  PostBackUrl="~/bio/ventas/FactLetra/Factura_Det.aspx" OnClick="lbFacturas_Click"><i class="fa fa-edit fa-fw"></i>D.Facturación</asp:LinkButton>                                
+                                    </li>
+                                    <li>
+                                        <asp:LinkButton ID="lbletras" runat="server"  PostBackUrl="~/bio/ventas/FactLetra/Letras.aspx" OnClick="lbFacturas_Click"><i class="fa fa-edit fa-fw"></i>E.Letras</asp:LinkButton>                                
+                                    </li>
+                                     <li>
+                                        <asp:LinkButton ID="lbnotaCred" runat="server"  PostBackUrl="~/bio/ventas/FactLetra/NotaCredito.aspx" ><i class="fa fa-edit fa-fw"></i>F. Nota Credito</asp:LinkButton>                                
+                                    </li>
+                                    </ul>
+                                </li>
+
+                                  <li>
+                                    <asp:LinkButton ID="lbG1Clientes" runat="server" PostBackUrl="~/bio/ventas/Cliente/Clientes.aspx"><i class="fa fa-group fa-fw"></i>Clientes / E. de Cuentas</asp:LinkButton>
+                                                            
+                                </li>
+                                    <li>
+                                    <asp:LinkButton ID="lbG1Retenciones" runat="server" PostBackUrl="~/bio/ventas/ctacobros/Retenciones.aspx"><i class="fa fa-file-archive-o fa-fw"></i>Retenciones</asp:LinkButton>
+                                </li>
+                               
+                               
+
+                                 <li>
+                                    <asp:LinkButton ID="lbG1GuiasRemsion" runat="server" PostBackUrl="~/bio/ventas/FactLetra/GuiaRemision.aspx"><i class="fa fa-edit fa-fw"></i>Reporte Guia Remisión</asp:LinkButton>
+                                </li>
+                               
+
+                                <li>
+                                    <asp:LinkButton ID="lbG1Factura" runat="server" PostBackUrl="~/bio/ventas/ctacobros/FacturasGeneral.aspx"><i class="fa fa-edit fa-fw"></i>Reporte de Facturas</asp:LinkButton>
+                                </li>
+
+                                 <li>
+                                    <asp:LinkButton ID="lbG1Letra" runat="server" PostBackUrl="~/bio/ventas/ctacobros/LetrasGeneral.aspx"><i class="fa fa-edit fa-fw"></i>Reporte de Letras</asp:LinkButton>
+                                </li>
+                            
+                                
+                                    <li>
+                                    <asp:LinkButton ID="lbG1CtaXCobrar" runat="server" PostBackUrl="~/bio/ventas/CuentasXCobrar.aspx"><i class="fa fa-money fa-fw"></i> Cuentas por cobrar</asp:LinkButton>
+                                </li>
+
+
+                             
+                                
+                               
+                                
+                                 
+                                
+
+                                </asp:Panel> 
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                       
+                       
+                        
+
+                        <li>
+                            <asp:LinkButton ID="lbmenuCompras" runat="server" ><i class="fa fa-shopping-cart fa-fw"></i> Compras<span class="fa arrow"></span></asp:LinkButton>
+                                    
+                                    <ul class="nav nav-third-level">
+                                         <li>
+                                        <asp:LinkButton ID="lbProductos" runat="server" PostBackUrl="~/bio/ventas/compras/Productos.aspx"><i class="fa fa-edit fa-fw"></i> Productos/Serv.</asp:LinkButton>
+                                        </li>
+
+                                        <li>
+                                        <asp:LinkButton ID="lbProveedores" runat="server" PostBackUrl="~/bio/ventas/compras/Proveedor.aspx"><i class="fa fa-group fa-fw"></i> Proveedores</asp:LinkButton>
+                                        </li>
+
+
+                                         <li>
+                                        <asp:LinkButton ID="lbCotizaciones" runat="server" PostBackUrl="~/bio/ventas/compras/Cotizaciones.aspx"><i class="fa fa-copy fa-fw"></i> Cotizaciones</asp:LinkButton>
+                                        </li>
+
+                                         <li>
+                                        <asp:LinkButton ID="lbocCompras" runat="server" PostBackUrl="~/bio/ventas/compras/Compras.aspx"><i class="fa fa-shopping-cart  fa-fw"></i> Compras</asp:LinkButton>
+                                        </li>
+
+                                         <li>
+                                        <asp:LinkButton ID="lbocRegCuenta" runat="server" PostBackUrl="~/bio/ventas/compras/PagosRegistrar.aspx"><i class="fa fa-tags  fa-fw"></i> Cuentas Admin.</asp:LinkButton>
+                                        </li>
+
+                                        <li>
+                                        <asp:LinkButton ID="lbCompras" runat="server" PostBackUrl="~/porpagar/Pagos_ctaporpagar.aspx"><i class="fa fa-money fa-fw"></i> Cuentas por pagar</asp:LinkButton>
+                                        </li>
+                                   </ul>
+                        </li>
+                       <asp:Panel ID="Panel1" runat="server" Visible="False"> 
+                            </asp:Panel>
+
+                        <asp:Panel ID="panelUnidades" runat="server">
+                        </asp:Panel>
+                       
+                        <li>
+                            <asp:LinkButton ID="lbGrupoUnidades" runat="server" ><i class="fa fa-car fa-fw"></i> Unidades<span class="fa arrow"></span></asp:LinkButton>
+                                   
+                                    <ul class="nav nav-third-level">
+                                        <asp:Panel ID="PanelUnidad" runat="server" CssClass="nav">
+                                        <li>
+                                        <asp:LinkButton ID="lbtn_UniSolicitud" runat="server" PostBackUrl="~/bio/ventas/Unidades/SolicitudListar.aspx"><i class="fa fa-envelope-o fa-fw"></i> Solicitud Técnica</asp:LinkButton>
+                                        </li> 
+                                            <%-- <li>
+                                        <asp:LinkButton ID="LinkButton2" runat="server" PostBackUrl="~/bio/ventas/Unidades/UnidadesLista.aspx"><i class="fa fa-car fa-fw"></i> Unidades Vehiculares</asp:LinkButton>
+                                        </li>--%>
+
+                                        <li>
+                                        <asp:LinkButton ID="lbtn_Unidades" runat="server" PostBackUrl="~/bio/ventas/Unidades/UnidadesLista.aspx"><i class="fa fa-car fa-fw"></i> Unidades</asp:LinkButton>
+                                        </li>
+
+                                        
+
+                                         <li>
+                                        <asp:LinkButton ID="lbtn_UniResumen" runat="server" PostBackUrl="~/bio/ventas/Unidades/RTecnico.aspx"><i class="fa fa-copy fa-fw"></i> Resumen</asp:LinkButton>
+                                        </li>
+                                             <%--     <li>
+                                        <asp:LinkButton ID="lbntRTAsesor" runat="server" PostBackUrl="~/bio/ventas/Unidades/ResumTecAsesor.aspx" Visible="False"><i class="fa fa-copy fa-fw"></i> Resumen Tec. Asesor</asp:LinkButton>
+                                        </li>--%>                                     
+                                        <%-- <li>
+                                        <asp:LinkButton ID="lbtn_UniNormas" runat="server" PostBackUrl="~/bio/ventas/Unidades/UnidadesNormas.aspx"><i class="fa fa-edit fa-fw"></i> Unidades Normas</asp:LinkButton>
+                                        </li>--%>
+                                       <li>
+                                        <asp:LinkButton ID="lbnt_UniAdmServi" runat="server" PostBackUrl="~/bio/ventas/Unidades/AdmAccesorio.aspx"><i class="fa fa-gears fa-fw"></i> Administrar</asp:LinkButton>
+                                        </li>
+                                        </asp:Panel>
+                                   </ul>
+                                        
+                        </li>
+                          
+                         
+                        
+                        <li>
+                            <asp:LinkButton ID="lbRecursos" runat="server" PostBackUrl="~/bio/ventas/rrhh/RegViaticosRegistrados.aspx"><i class="fa  fa-credit-card fa-fw"></i> Viáticos</asp:LinkButton>
+                           
+                        </li>
+
+
+
+                         <li>
+                                    <asp:LinkButton ID="lbResumenVentas" runat="server" OnClick="lbResumenVentas_Click"><i class="fa fa-bar-chart-o fa-fw"></i> Resumen<span class="fa arrow"></span></asp:LinkButton>
+                                    
+                                    <ul class="nav nav-third-level">
+                                         <asp:Panel ID="PanelResumen" runat="server" CssClass="nav">
+                                        <li>
+                                            <asp:LinkButton ID="lbrVentasGeneral" runat="server" OnClick="lbrVentasGeneral_Click" PostBackUrl="~/bio/ventas/ResumenVentasAgrup.aspx">Ventas</asp:LinkButton>
+                                            
+                                        </li>
+                                              <li>
+                                            <asp:LinkButton ID="lbtncotizacion" runat="server" OnClick="lbrVentasGeneral_Click" PostBackUrl="~/bio/ventas/ResumenCotizacion.aspx">Cotización</asp:LinkButton>
+                                            
+                                        </li>
+                                        <li>
+                                           <%-- <asp:LinkButton ID="lbrVentasComparativo" runat="server" OnClick="lbrVentasComparativo_Click" PostBackUrl="~/bio/ventas/proyectado/Validar.aspx">R.Proyectado</asp:LinkButton>--%>
+                                           <asp:LinkButton ID="lbrVentasComparativo" runat="server" OnClick="lbrVentasComparativo_Click" PostBackUrl="~/bio/ventas/proyectado/RegProyectadoGrupal.aspx">Proyectado</asp:LinkButton>
+                                        </li>
+                                        <li>
+                                            <asp:LinkButton ID="lbremProducto" runat="server"  PostBackUrl="~/bio/ventas/Resumen/facturacion.aspx">Facturación</asp:LinkButton>
+                                          
+                                        </li>
+                                              <li>
+                                            <asp:LinkButton ID="lbtncc" runat="server"  PostBackUrl="~/bio/ventas/RCentroCosto.aspx">Resúmen de Gastos</asp:LinkButton>
+                                          
+                                        </li>
+                                        <li>
+                                            <asp:LinkButton ID="lbResumenViaticos" runat="server"  PostBackUrl="~/bio/ventas/costos/Viaticos.aspx">Viáticos</asp:LinkButton>
+                                          
+                                        </li>
+                                             </asp:Panel>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                        </li>
+
+
+
+                        <li>
+                                      <asp:LinkButton ID="lbrrhh" runat="server" OnClick="lbrrhh_Click"><i class="fa fa-users fa-fw"></i> RR.HH.<span class="fa arrow"></span></asp:LinkButton>
+                                   
+                                    <ul class="nav nav-third-level">
+
+
+                                       
+                                      <%--   <li>
+                                             <asp:LinkButton ID="lbtnPerfilPersonal" runat="server" PostBackUrl="~/consultas/NuestrosColaboradores.aspx"><i class="fa fa-users fa-fw"></i> Perfil personal</asp:LinkButton>
+                                   --%>
+                                       
+
+                                       
+                                    
+                                         <li>
+                                             <asp:LinkButton ID="lbrrhhreg" runat="server" PostBackUrl="~/bio/ventas/rrhh/Default.aspx"><i class="fa fa-users fa-fw"></i>  Recursos Humanos</asp:LinkButton>
+                                   
+                                        </li>
+                                            <li>
+                                           <asp:LinkButton ID="lbhonomasticos" runat="server" OnClick="lbrrhh_Click" PostBackUrl="~/bio/ventas/rrhh/Honomastico.aspx"><i class="fa fa-gift fa-fw"></i> Honomásticos</asp:LinkButton>
+                                   
+                                        </li>
+                                           <li>
+                                             <asp:LinkButton ID="lbtnResumenVacacional" runat="server" PostBackUrl="~/bio/ventas/rrhh/ResumenVacacional.aspx"><i class="fa fa-users fa-fw"></i> Resumen Vacacional</asp:LinkButton>
+                                   
+                                        </li>
+                                         <li>
+                                             <asp:LinkButton ID="lbtnRemuneracion" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/RemuneracionBruta.aspx"><i class="fa fa-users fa-fw"></i> Planilla</asp:LinkButton>
+                                   
+                                        </li>
+                                             <li>
+                                             <asp:LinkButton ID="lbtnSolRegistradas" runat="server" PostBackUrl="~/bio/ventas/rrhh/Solicitud/SolicitudesRegistradasAdm.aspx"><i class="fa fa-users fa-fw"></i> Solicitudes registradas</asp:LinkButton>
+                                   
+                                        </li>                                                       
+                                      
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
+
+
+
+
+                         <li>
+                            <asp:LinkButton ID="lbAdministrar" runat="server" ><i class="fa fa-gears fa-fw"></i> Administrar<span class="fa arrow"></span></asp:LinkButton>
+                           
+                             <ul class="nav nav-third-level">
+                                        
+                                        <li>
+                                            <asp:LinkButton ID="lbtipoCambio" runat="server"  PostBackUrl="~/bio/ventas/Admin/TipoCambio.aspx" OnClick="lbtipoCambio_Click">Tipo de Cambio</asp:LinkButton>
+                                            
+                                        </li>
+                                       <li>
+                                            <asp:LinkButton ID="lbContabilidad" runat="server"  PostBackUrl="~/bio/ventas/A_contabilidad/Default.aspx" OnClick="lbtipoCambio_Click">Contabilidad</asp:LinkButton>
+                                            
+                                        </li>
+                                  <li>
+                                            <asp:LinkButton ID="LinkButton2" runat="server"  PostBackUrl="~/bio/ventas/Admin/Viaticos.aspx" OnClick="lbtipoCambio_Click">Viáticos</asp:LinkButton>
+                                            
+                                        </li>
+                                  <li>
+                                            <asp:LinkButton ID="btRequerimiento" runat="server"  PostBackUrl="~/bio/ventas/Admin/ReqSistemas.aspx" OnClick="lbtipoCambio_Click">Req. Sistemas</asp:LinkButton>
+                                            
+                                        </li>
+                             </ul>
+                                    <!-- /.nav-third-level -->
+
+
+                        </li>
+
+                      
+                        
+                        
+                       
+                            <asp:Label ID="lblcodusu10" runat="server" Visible="False"></asp:Label>
+                            <asp:Label ID="lblidusuario10" runat="server" Visible="False"></asp:Label>
+                            <asp:Label ID="lblnivel10" runat="server" Visible="False"></asp:Label>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+
+               
+            </div> 
+            <!-- /.navbar-static-side -->
+        </nav>
+
+    <div id="page-wrapper">
+        <div class="container-fluid">
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+           
+          
+            <p>
+                &nbsp;</p>
+        
+           
+          
+        </asp:ContentPlaceHolder>
+            </div>
+    </div>
+            </div>
+    </form>
+     <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="/bio/vendorF/jquery/jquery.min.js"></script>
+    <script src="/bio/vendorF/jquery/jquery.js"></script>
+   
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bio/vendorF/bootstrap/js/bootstrap.min.js"></script>
+   
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/bio/vendorF/metisMenu/metisMenu.min.js"></script>
+   
+    <!-- DataTables JavaScript -->
+    <script src="/bio/vendorF/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/bio/vendorF/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="/bio/vendorF/datatables-responsive/dataTables.responsive.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/bio/dist/js/sb-admin-2.js"></script>
+    
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+        $(document).ready(function () {
+            $('#gvFichaCliente').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+
+
+   
+</body>
+</html>

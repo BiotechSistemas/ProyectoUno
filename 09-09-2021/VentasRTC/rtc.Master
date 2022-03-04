@@ -1,0 +1,379 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="rtc.master.cs" Inherits="biotech.VentasRTC.rtc" %>
+
+<!DOCTYPE html>
+<!-- saved from url=(0057)http://bolsadetrabajo.upc.edu.pe/offers/request/graduate/ -->
+<html class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="es-ES" style=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- MOTOR DE RENDERIZADO: hacer que IE use el más moderno (o Chrome Frame): h5bp.com/i/378 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="dns-prefetch" href="http://fonts.googleapis.com/">
+    
+    
+
+    <title>Biotech | RTC</title>
+      <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <!-- DESCRIPTION -->
+    <meta name="description" content="Ingresa a la Bolsa de Trabajo UPC, la plataforma de oportunidades laborales para el desarrollo profesional de la comunidad UPC: Pregrado, EPE, Postgrado y Alumni">
+    <meta name="keywords" content="bolsa de trabajo, upc, bolsa de trabajo upc, trabajo upc">
+    <!-- OPTTIMIZACIÓN PARA MOVILES: corrige la escala del sitio -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="./archivos/css" rel="stylesheet" type="text/css">
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="./archivos/bootstrap.css">
+    <link rel="stylesheet" href="./archivos/bootstrap-responsive.css">
+    <link rel="stylesheet" href="./archivos/font-awesome.css">
+    <!-- CSS Plugins -->
+    <link rel="stylesheet" href="./archivos/datepicker.css">
+    <link rel="stylesheet" href="./archivos/chosen.css">
+    <!-- MODERNIZR -->
+    <script src="./archivos/315456.js.descarga" type="text/javascript" id="hs-script-loader"></script><script id="hs-analytics" src="./archivos/315456.js(1).descarga"></script><script async="" src="./archivos/uwt.js.descarga"></script><script type="text/javascript" async="" src="./archivos/ga.js.descarga"></script><script async="" src="./archivos/gtm.js.descarga"></script><script src="./archivos/modernizr-2.6.2.min.js.descarga"></script>
+    <!-- JQUERY: Busca el CDN Google; en caso de estar offline usa la versión local -->
+    <script src="./archivos/jquery.min-1.8.3.js.descarga"></script>
+    <script>window.jQuery || document.write('<script src="/static/js/libs/jquery-1.8.3.min.js"><\/script>')</script>
+    <!-- OTROS SCRIPTS -->
+   
+     <script src="./archivos/bootstrap.min.js.descarga"></script>
+    <script src="./archivos/bootstrap-datepicker.js.descarga"></script>
+    <script src="./archivos/form2js.js.descarga"></script>
+    <script src="./archivos/jquery.toObject.js.descarga"></script>
+    <script src="./archivos/jquery.cookie.js.descarga"></script>
+    <script src="./archivos/tiny_mce.js.descarga"></script>
+    <script src="./archivos/spin.js.descarga"></script>
+    <script src="./archivos/jquery.spin.js.descarga"></script>
+    <script src="./archivos/pagination.js.descarga"></script>
+    
+    <link rel="stylesheet" href="./archivos/table.css">
+    <link rel="stylesheet" type="text/css" href="./archivos/jquery-ui.1.10.1.css">
+    <link rel="stylesheet" href="./archivos/jquery.tree.min.css">
+  
+    
+    <script type="text/javascript">
+        var language = null;
+        var curriculumNumber = null;
+        var languagesListado = [];
+        var coursesListado = [];
+    </script>
+
+    <link rel="stylesheet" href="./archivos/header.css">
+    <link rel="stylesheet" href="./archivos/app-site.css">
+    <link rel="stylesheet" href="./archivos/app.css">
+    <link rel="stylesheet" href="./archivos/app-responsive.css">
+    <link rel="stylesheet" href="./archivos/footer.css">
+    <link rel="stylesheet" href="./archivos/custom.css">
+    <link rel="stylesheet" href="./archivos/impresion-cv.css" media="print">
+    <link rel="shortcut icon" href="http://www.biotechcorp.com.pe/webapp/LOGO-BIO.ico">
+    
+    
+    <!-- Google Tag Manager -->
+<script>
+    var fecha = { init: function () { var e = new Date; e = e.getFullYear() + "" + fecha.anadeCero(e.getMonth() + 1) + "" + fecha.anadeCero(e.getDate()); return e }, anadeCero: function (e) { e = e < 10 ? "0" + e : e; return e } }; dataLayer = [{ "tipo-visita": "UPC", gaFechaVisita: fecha.init() }]
+</script>
+<noscript>&lt;iframe src="//www.googletagmanager.com/ns.html?id=GTM-K4VX9M"
+height="0" width="0" style="display:none;visibility:hidden"&gt;&lt;/iframe&gt;</noscript>
+<script>(function (w, d, s, l, i) {
+w[l] = w[l] || []; w[l].push({
+'gtm.start':
+new Date().getTime(), event: 'gtm.js'
+}); var f = d.getElementsByTagName(s)[0],
+j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+'//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-K4VX9M');</script>
+<!-- End Google Tag Manager -->
+
+    
+  </head>
+
+  
+
+
+
+<body class="bg-home" id="base-enterprise"><input type="hidden" id="uc_epe_is_active" value="True">
+
+<div id="main_header" class="navbar">
+    <div class="container fake-header">
+        <div class="logo_header span12">
+            
+        </div>
+
+        <div class=" span11 pull-right link_header">
+            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/VentasRTC/Default.aspx">Principal</asp:HyperLink>
+            <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/VentasRTC/RegFormCliente.aspx">Cliente</asp:HyperLink>
+            
+
+            <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/VentasRTC/Pedidos.aspx">Nota de Ventas</asp:HyperLink>
+            
+            <%--<asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="javascript:abrir('pedidos/BioPedidos.aspx')">Pedidos</asp:HyperLink>--%>
+
+            <%--<asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/VentasRTC/Pedidos.aspx">Pedidos-Venta</asp:HyperLink>--%>
+            <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/VentasRTC/RendGastos.aspx">Viáticos</asp:HyperLink>
+
+            <%--<asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/VentasRTC/Visita.aspx">Cuadro de Visitas</asp:HyperLink>--%>
+            <asp:HyperLink ID="HyperLinkensayo" runat="server" NavigateUrl="~/VentasRTC/EnsayoA.aspx">Ensayo</asp:HyperLink>
+            <%--<asp:HyperLink ID="HyperLink10" runat="server" NavigateUrl="~/VentasRTC/registrarproyectado.aspx">Proyecado</asp:HyperLink>--%>
+            <asp:HyperLink ID="HyperLink10" runat="server" NavigateUrl="~/VentasRTC/RegProyectadoGrupal.aspx">Proyectado</asp:HyperLink>
+            <asp:HyperLink ID="HyperLinkensayoVentas" runat="server" NavigateUrl="~/VentasRTC/EnsayoVendedor.aspx">Ensayo</asp:HyperLink>
+            <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/VentasRTC/VentasZonal.aspx">Resumen Ventas</asp:HyperLink>
+            <asp:HyperLink ID="HyperLink7" runat="server" NavigateUrl="~/VentasRTC/ComprasCotizacion.aspx">Compras Cot.</asp:HyperLink>
+            
+          
+            <asp:HyperLink ID="HyperLink6" runat="server" Visible="false" NavigateUrl="~/VentasRTC/Existencia/Default.aspx">Stock</asp:HyperLink>
+             <asp:HyperLink ID="HyperLink8" runat="server" NavigateUrl="~/VentasRTC/UnidadSolicitud.aspx">Solic. Vehicular.</asp:HyperLink>
+             <asp:HyperLink ID="HyperLink9" runat="server" NavigateUrl="~/VentasRTC/SolicitudesGDH.aspx">Solicitud GDH</asp:HyperLink>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="main_menu" class="container">
+    
+</div>
+
+
+<script type="text/javascript">
+    if ($('#uc_epe_is_active').val() == 'False') {
+        $('#url_epe_request').remove();
+    }
+    if (top != self) top.location.replace(location);
+</script>
+
+  
+
+    <div id="wrapper" class="container">
+        <div class="general_container">
+          <div class="head-company"></div>
+    
+
+    <div class="section company">
+        <div class="head clearfix">
+            
+                <h3 class="title pull-left"><asp:ContentPlaceHolder ID="ContentPlaceHolder3" runat="server">
+                    
+                    
+                   </asp:ContentPlaceHolder>  
+                    </h3>
+           
+        
+            <span class="logo-offer-container">   
+                <img src="archivos/logo.png" width="146" height="146" class="pull-right logo_offer">
+               
+            </span>
+        
+
+       
+            
+        </div>
+
+        <form  id="form1" runat="server"  class="form-horizontal">
+
+        <div class="form-container">
+            
+        
+        
+
+    
+         <fieldset>
+
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+         </fieldset>
+<%--___________________________--%>
+
+        
+
+
+        
+        </div>
+                        </div>
+                    <div class="form-actions">
+                        
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+                            <p class="note">
+                                &nbsp;</p>
+                        </asp:ContentPlaceHolder>
+                    <!-- <button class="btn">Cancelar</button> -->
+                       
+                    
+                
+              </div>
+            
+        </div>
+        <!-- /.form-container -->
+    </div> <!-- /.section -->
+     </form>
+    <div id="dialog-confirm" title="Confirmación de Envío" style="display: none;">
+        <p>¿Está seguro que desea enviar esta oferta? </p>
+    </div>
+
+    <script src="./archivos/jquery-ui.1.10.1.js.descarga"></script>
+    <script type="text/javascript" src="./archivos/jquery.tree.min.js.descarga"></script>
+    <script type="text/javascript" src="./archivos/chosen.jquery.min.js.descarga"></script>
+    <script type="text/javascript" src="./archivos/datepicker.js.descarga"></script>
+    <script src="./archivos/plugins.js.descarga"></script>
+    <script src="./archivos/main.js.descarga"></script>
+    <script src="./archivos/jquery.maxlength.js.descarga"></script>
+    <script src="./archivos/offer-request.js.descarga"></script>
+    <script>
+        !(function ($) {
+
+            $current_contact_name = $('#id_contact_name');
+            $current_email = $('#id_email');
+            $new_contact_name = $('#id_name_contact_offer');
+            $new_email = $('#id_email_contact_offer');
+
+            $new_contact_name.attr('value', $current_contact_name.val());
+            $new_email.attr('value', $current_email.val());
+
+            $current_contact_name.on('keyup', function () {
+                $new_contact_name.attr('value', $(this).val());
+            });
+
+            $current_email.on('keyup', function () {
+                $new_email.attr('value', $(this).val());
+            });
+
+            // Chosen components
+            $('.chzn-select').chosen();
+
+            $('#checkbox-tree').tree({
+                collapseUiIcon: 'ui-icon-plusthick',
+                expandUiIcon: 'ui-icon-minusthick'
+            });
+
+            $('#initOffer').datepicker('place');
+            $('#endOffer').datepicker();
+            $('.autocompleteEnterprise').typeahead({
+                source: function (query, process) {
+                    return $.get('/enterprises/autocomplete_enterprise/', { query: query }, function (data) {
+                        return process(data);
+                    });
+                }
+            });
+
+            var controlgroup = $('.errorlist').parents('.control-group');
+            $(controlgroup).addClass('error');
+
+            var input = $('.errorlist').first().parent().find('input').first();
+            var textarea = $('.errorlist').first().parent().find('textarea').first();
+            input.focus();
+            textarea.focus();
+
+            if ($('#form_joboffer').attr('action') == '/offers/request/graduate/')
+                $('#BolsaTrabajo-btnEnviar').attr("id", "BolsaTrabajo-Egresados-btnEnviar");
+
+            if ($('#form_joboffer').attr('action') == '/offers/request/undergraduate/')
+                $('#BolsaTrabajo-btnEnviar').attr("id", "BolsaTrabajo-Practicantes-btnEnviar");
+
+            if ($('#form_joboffer').attr('action') == '/offers/request/epe/')
+                $('#BolsaTrabajo-btnEnviar').attr("id", "BolsaTrabajo-Epe-btnEnviar");
+
+            if ($('#form_joboffer').attr('action') == '/offers/request/postgraduate/')
+                $('#BolsaTrabajo-btnEnviar').attr("id", "BolsaTrabajo-Postgraduate-btnEnviar");
+
+
+            // Experience
+            var $reqexp = $('.reqexp'),
+                    $expdetail = $('.exp-detail');
+
+            $reqexp.on('change', function () {
+                var er = $(this);
+                if (er.val() == '1') {
+                    $expdetail.show();
+                } else {
+                    $expdetail.hide();
+                }
+            });
+
+            $('li.other-check').on('click', function () {
+                var $this = $(this);
+                var $parent = $this.parents('li.faculty');
+                if ($parent.find(".check-group:checked").length == 0) {
+                    $parent.find('.check-faculty').removeAttr('checked');
+                }
+            });
+
+
+        })(jQuery);
+    </script>
+    <link href="./archivos/ajax-upload-widget.css" type="text/css" media="all" rel="stylesheet">
+<script type="text/javascript" src="./archivos/jquery.iframe-transport.js.descarga"></script>
+<script type="text/javascript" src="./archivos/ajax-upload-widget.js.descarga"></script>
+
+            
+        </div>
+    </div>
+<script type="text/javascript" id="">!function (b, c, d, a) { b.twq || (a = b.twq = function () { a.exe ? a.exe.apply(a, arguments) : a.queue.push(arguments) }, a.version = "1", a.queue = [], t = c.createElement(d), t.async = !0, t.src = "//static.ads-twitter.com/uwt.js", s = c.getElementsByTagName(d)[0], s.parentNode.insertBefore(t, s)) }(window, document, "script"); twq("init", "nv1i5"); twq("track", "PageView");</script>
+
+<script type="text/javascript" id="Script1">!function (b, c, d, a) { b.twq || (a = b.twq = function () { a.exe ? a.exe.apply(a, arguments) : a.queue.push(arguments) }, a.version = "1", a.queue = [], t = c.createElement(d), t.async = !0, t.src = "//static.ads-twitter.com/uwt.js", s = c.getElementsByTagName(d)[0], s.parentNode.insertBefore(t, s)) }(window, document, "script"); twq("init", "nv7tc"); twq("track", "PageView");</script>
+
+
+    
+
+
+
+
+
+
+<script src="./archivos/jquery.masonry.min.js.descarga"></script>
+<script>
+    $(function () {
+
+        var $articles = $('#article-list');
+
+        $articles.imagesLoaded(function () {
+            $('#article-list').masonry({
+                itemSelector: '.article',
+                columnWidth: function (containerWidth) {
+                    return containerWidth / 3;
+                },
+                isAnimated: !Modernizr.csstransitions
+            });
+        });
+
+        $('.carousel').carousel();
+
+    });
+</script>
+
+
+<script>
+    (function ($) {
+        $('.other-check').find('span').remove();
+    })(jQuery);
+</script>
+
+<script src="./archivos/jquery.masonry.min.js.descarga"></script>
+<script src="./archivos/css3-mediaqueries.min.js.descarga"></script>
+<script src="./archivos/jquery.dataTables.min.js.descarga"></script>
+<script src="./archivos/transit.min.js.descarga"></script>
+
+
+<script>
+    $('a.dropdown-toggle, .dropdown-menu a').on('touchstart', function (e) {
+        e.stopPropagation();
+    });
+
+    if (!Modernizr.input.placeholder) {
+        //alert('No soportas placeholder :(');
+        Modernizr.load({
+            test: Modernizr.input.placeholder,
+            nope: ['/static/js/placeholder.min.js'],
+            complete: function () {
+                $('input, textarea').placeholder();
+            }
+        });
+    }
+</script>
+
+  
+
+<script src="./archivos/adsct" type="text/javascript"></script><script src="./archivos/adsct(1)" type="text/javascript"></script><div style="display: none; visibility: hidden;">
+<script type="text/javascript">(function (a, c, d, e) { if (!a.getElementById(d)) { var b = a.createElement(c); a = a.getElementsByTagName(c)[0]; b.id = d; b.src = "//js.hs-analytics.net/analytics/" + Math.ceil(new Date / e) * e + "/315456.js"; a.parentNode.insertBefore(b, a) } })(document, "script", "hs-analytics", 3E5);</script>
+</div></body></html>

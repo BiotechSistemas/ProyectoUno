@@ -1,0 +1,57 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="zonajefatura.master.cs" Inherits="biotech.paginamaestra.zonajefatura" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .auto-style1 {
+            width: 100%;
+        }
+        .auto-style2 {
+            width: 282px;
+            height: 92px;
+            margin-right: 0px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table class="auto-style1">
+            <tr>
+                <td>
+                    <img alt="" class="auto-style2" src="../images/logobio.png" /><br />
+                    <br />
+                    <table class="auto-style1">
+                        <tr>
+                            <td><asp:Button ID="Button1" runat="server" Text="AUTORIZACION" Width="141px" OnClick="Button1_Click" />
+                    <asp:Button ID="Button2" runat="server" Text="VENTAS REALIZADAS" />
+                    <asp:Button ID="Button3" runat="server" Text="MOVIMIENTOS" />
+                    <asp:Button ID="Button4" runat="server" Text="INVENTARIO" />
+                                <asp:Button ID="Button5" runat="server" Text="CLIENTES" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><hr /></td>
+                        </tr>
+                        <tr>
+                            <td>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </table>
+        <br />
+    </div>
+    </form>
+</body>
+</html>

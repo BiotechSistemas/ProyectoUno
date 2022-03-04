@@ -1,0 +1,96 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="contabilidad.master.cs" Inherits="biotech.bio.ventas.A_contabilidad.contabilidad" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+
+    <link href="../../vendorF/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <script src="../../vendorF/bootstrap/js/bootstrapv3-4.min.js"></script>
+    <style type="text/css">
+    th
+    {
+        text-align:center;
+    }
+    </style>
+
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+
+  
+
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">
+          <asp:Image ID="Image1" runat="server" ImageUrl="~/images/logobiotech.png" Height="30px" Width="60px" />
+      </a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+       <li class="active"><a href="Default.aspx">Principal</a></li>
+
+         <li class="dropdown">
+             <asp:LinkButton ID="lbtnExportar" class="dropdown-toggle" data-toggle="dropdown" runat="server">Exportar cuentas <span class="caret"></asp:LinkButton>
+          
+          <ul class="dropdown-menu">
+              <li>  <asp:LinkButton ID="LinkButton2" runat="server" PostBackUrl="~/bio/ventas/A_contabilidad/ComprasFact.aspx">Compras - Facturaciones</asp:LinkButton></li>
+              <li>  <asp:LinkButton ID="e1" runat="server" PostBackUrl="~/bio/ventas/A_contabilidad/ComprasViaticos.aspx">Compras Viáticos</asp:LinkButton></li>
+              <li>  <asp:LinkButton ID="LinkButton1" runat="server" PostBackUrl="~/bio/ventas/A_contabilidad/ComprasInternas.aspx">Compras Internas</asp:LinkButton></li>
+              <li>  <asp:LinkButton ID="e2" runat="server" PostBackUrl="~/bio/ventas/A_contabilidad/Ventas.aspx">Ventas</asp:LinkButton></li>
+            
+          </ul>
+        </li>
+         
+<%--           
+    <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Remuneración <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+           <li>  <asp:LinkButton ID="LinkButton1" runat="server" PostBackUrl="~/bio/ventas/rrhh/planilla/Remuneracion.aspx">Remuneración</asp:LinkButton></li>
+          </ul>
+        </li>--%>
+   
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+       <%-- <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>--%>
+        <%--<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>--%>
+         <li> <asp:LinkButton ID="lbtnSalir" runat="server" OnClick="lbtnSalir_Click">Salir</asp:LinkButton></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+
+      <!-- Main component for a primary marketing message or call to action -->
+     
+
+     <!-- /container -->
+
+
+
+        
+    
+    </form>
+</body>
+</html>

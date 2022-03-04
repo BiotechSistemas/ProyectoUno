@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DespatchAdvice xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2">
+  
+  
+  <ext:UBLExtensions>
+    <ext:UBLExtension>
+      <ext:ExtensionContent>
+    
+    <Signature Id="Sunat" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>BWRKHxrSAetMu4A9i1IZ24t19bo=</DigestValue></Reference></SignedInfo><SignatureValue>Bmgi84eGiftxGEq6V7ngVmf2badQRRUyEZJ496SXkgadHQ8lDELu6X5zgsWqOnRuXLIwhRRUmngGsu7wpDvN74Iibpir9XzQoztGd45xXiZooYbJgjdGFTwG2avn0yktAPDBgyqhjYnfcFlCdg7JG7TebZlZtp71CILKixhvp9+mwWFgAcaSkwqdAsVenvILgANtSTSdsXbsmJHC0DVERtsHi2RXtbOl57S9E/iNZEuu7l1w/UlDSZk+Ru+GEMts9prsPKMXf/sbgla+aceTrgFfFj+YBL4hg4nSBOndUVILknZMC+TfE+bzu3CmazVChtGI0NpVOjD+I+lBNGwvqw==</SignatureValue><KeyInfo><X509Data><X509SubjectName>C=PE, O=BIOTECH CORP S.A.C., OID.2.5.4.97=20601613396, OU=Issued by SENDA TI SOLUTIONS [PE1], OU=GERENTE, T=GERENTE GENERAL, S=LIMA - LIMA, L=SANTIAGO DE SURCO, SERIALNUMBER=DNI:40052921, SN=CHAVEZ CALDERON, G=DANNY WILLIAMS, CN=DANNY WILLIAMS CHAVEZ CALDERON, E=danny.chavez@biotechcorp.com.pe</X509SubjectName><X509Certificate>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</X509Certificate></X509Data></KeyInfo></Signature></ext:ExtensionContent>
+    </ext:UBLExtension>
+ 
+  </ext:UBLExtensions>
+
+
+  
+  <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+  <cbc:CustomizationID>1.0</cbc:CustomizationID>
+  <cbc:ID>T001-595</cbc:ID>
+  <cbc:IssueDate>2018-11-26</cbc:IssueDate>
+  <cbc:DespatchAdviceTypeCode>09</cbc:DespatchAdviceTypeCode>
+  <cbc:Note><![CDATA[]]></cbc:Note>
+  <cac:Signature>
+    <cbc:ID>signatureKG</cbc:ID>
+    <cac:SignatoryParty>
+      <cac:PartyIdentification>
+        <cbc:ID>20601613396</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>BIOTECH CORP S.A.C.</cbc:Name>
+      </cac:PartyName>
+    </cac:SignatoryParty>
+    <cac:DigitalSignatureAttachment>
+      <cac:ExternalReference>
+        <cbc:URI>#signatureKG</cbc:URI>
+      </cac:ExternalReference>
+    </cac:DigitalSignatureAttachment>
+  </cac:Signature>
+  <cac:DespatchSupplierParty>
+    <cbc:CustomerAssignedAccountID schemeID="6">20601613396</cbc:CustomerAssignedAccountID>
+    <cac:Party>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>BIOTECH CORP S.A.C.</cbc:RegistrationName>
+      </cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:DespatchSupplierParty>
+  <cac:DeliveryCustomerParty>
+    <cbc:CustomerAssignedAccountID schemeID="6">20602872760</cbc:CustomerAssignedAccountID>
+    <cac:Party>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName><![CDATA[LOS OLIVOS DE VILLACURI S.A.C.]]></cbc:RegistrationName>
+      </cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:DeliveryCustomerParty>
+  <cac:Shipment>
+    <cbc:ID>1</cbc:ID>
+    <cbc:HandlingCode>01</cbc:HandlingCode>
+    <cbc:Information><![CDATA[VENTA]]></cbc:Information>
+    <cbc:GrossWeightMeasure unitCode="KGM">1.50</cbc:GrossWeightMeasure>
+    <cbc:SplitConsignmentIndicator>false</cbc:SplitConsignmentIndicator>
+    <cac:ShipmentStage>
+      <cbc:TransportModeCode>02</cbc:TransportModeCode>
+      <cac:TransitPeriod>
+        <cbc:StartDate>2018-11-26</cbc:StartDate>
+      </cac:TransitPeriod>
+      <cac:TransportMeans>
+        <cac:RoadTransport>
+          <cbc:LicensePlateID />
+        </cac:RoadTransport>
+      </cac:TransportMeans>
+      <cac:DriverPerson>
+        <cbc:ID schemeID="1">42354636</cbc:ID>
+      </cac:DriverPerson>
+    </cac:ShipmentStage>
+    <cac:Delivery>
+      <cac:DeliveryAddress>
+        <cbc:ID>150131</cbc:ID>
+        <cbc:StreetName>AV. LOS CONQUISTADORES NRO. 256 (OFICINA 401)</cbc:StreetName>
+      </cac:DeliveryAddress>
+    </cac:Delivery>
+    <cac:TransportHandlingUnit>
+      <cac:TransportEquipment>
+        <cbc:ID>Y2C-881</cbc:ID>
+      </cac:TransportEquipment>
+    </cac:TransportHandlingUnit>
+    <cac:OriginAddress>
+      <cbc:ID>110101</cbc:ID>
+      <cbc:StreetName>AV. AYABACA N°1095, CAMINO A COMATRANA</cbc:StreetName>
+    </cac:OriginAddress>
+  </cac:Shipment>
+   <cac:DespatchLine>
+  <cbc:ID>1</cbc:ID>
+  <cbc:DeliveredQuantity unitCode="NIU">1</cbc:DeliveredQuantity>
+  <cac:OrderLineReference>
+    <cbc:LineID>1</cbc:LineID>
+  </cac:OrderLineReference>
+  <cac:Item>
+    <cbc:Name><![CDATA[FACTOR Cu-1 L]]></cbc:Name>
+  </cac:Item>
+</cac:DespatchLine>
+
+</DespatchAdvice>

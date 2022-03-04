@@ -1,0 +1,221 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="~/venta_almacen/VentaAlmacen.Master" Inherits="biotech.styloprofesional.Site1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+ <style type="text/css">
+     #contenedor {
+            padding:10px;
+            overflow:hidden;
+
+        }
+        #medio {
+            float:initial;
+            padding:10px;
+            margin:10px;
+        }
+        #izquierda {
+             float:left;
+            padding:10px;
+            margin:10px;
+        }
+        #derecha {
+            float:left;
+            padding:10px;
+            margin:10px;
+        }
+    </style>
+
+    <title>BIOTECH CORP</title>
+   <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:700, 600,500,400,300' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="main.css">
+
+		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+		<script src="https://code.highcharts.com/highcharts.js"></script>
+		<script src="https://code.highcharts.com/modules/data.js"></script>
+		<script src="main.js"></script>
+
+		<style>
+      
+			.ad {
+				position: absolute;
+				width: 300px;
+				height: 250px;
+				border: 1px solid #ddd;
+				left: 50%;
+				transform: translateX(-50%);
+				top: 250px;
+				z-index: 10;
+			}
+			.ad .close {
+				position: absolute;
+				font-family: 'ionicons';
+				width: 20px;
+				height: 20px;
+				color: #fff;
+				background-color: #999;
+				font-size: 20px;
+				left: -20px;
+				top: -1px;
+				display: table-cell;
+				vertical-align: middle;
+				cursor: pointer;
+				text-align: center;
+			}
+		</style>
+		<script type="text/javascript">
+		    $(function () {
+		        $('.close').click(function () {
+		            $('.ad').css('display', 'none');
+		        })
+		    })
+		</script>
+
+
+</head>
+<body style="background-color:white;">
+    <div class="header">
+			
+                    <img src="../images/logobiotech.jpg" width="100" /><br />
+                   
+&nbsp;</div>
+		<div class="side-nav">
+			<div class="logo">
+				<i class="fa fa-tachometer" ></i>
+				<span>Biotech Corp</span>
+			</div>
+			<nav>
+				<ul>
+                    
+
+                   <li >
+						<a href="../facturacion/administrarFactura.aspx">
+							<span><i class="fa fa-pencil"></i></span>
+							<span>Admin. Fact</span>
+						</a>
+					</li>
+                    <li >
+						<a href="../facturacion/Facturacion.aspx">
+
+							<span><i class="fa fa-envelope"></i></span>
+							<span>FACTURACIÓN</span>
+						</a>
+					</li>
+                      
+                    <li>
+						<a href="../facturacion/RegLetraBio.aspx">
+							<span><i class="fa fa-credit-card-alt"></i></span>
+							<span>CANJE DE LETRAS</span>
+						</a>
+					</li>
+
+
+                   
+
+					
+					
+                    <li >
+						<a href="../facturacion/facturarporcobrar.aspx">
+							<span><i class="fa fa-bar-chart"></i></span>
+							<span>FACTR POR COBRAR</span>
+						</a>
+					</li>
+					
+                    <li>
+						<a href="../facturacion/letrasporcobrar.aspx">
+							<span><i class="fa fa-credit-card-alt"></i></span>
+							<span>LETRAS X COBRAR</span>
+						</a>
+					</li>
+
+                     <li>
+						<a href="../facturacion/OperacionesBancarias.aspx">
+							<span><i class="fa fa-credit-card-alt"></i></span>
+							<span>OPER. BANCARIAS</span>
+						</a>
+					</li>
+                     <li>
+						<a href="../facturacion/NotaCredito.aspx">
+
+							<span><i class="fa fa-envelope"></i></span>
+							<span>NOTA DE CRED</span>
+						</a>
+					</li>
+
+                      <li>
+						<a href="../facturacion/EstadodeCuentaCliente.aspx">
+							<span><i class="fa fa-user"></i></span>
+							<span>ESTADO DE CUENTAS</span>
+						</a>
+					</li>
+
+                    
+                      <li>
+						<a href="../facturacion/cliente.aspx">
+							<span><i class="fa fa-user"></i></span>
+							<span>CLIENTES</span>
+						</a>
+					</li>
+
+
+				<%--	<li>
+						<a href="#">
+							<span><i class="fa fa-credit-card-alt"></i></span>
+							<span>INGRESO PRODUC</span>
+						</a>
+					</li>
+                   <li>
+						<a href="#">
+							<span><i class="fa fa-credit-card-alt"></i></span>
+							<span>INVENTARIO - MOV</span>
+						</a>
+					</li>
+                    <li>
+						<a href="#">
+							<span><i class="fa fa-credit-card-alt"></i></span>
+							<span>INV. VALORIZADO</span>
+						</a>
+					</li>
+                     <li>
+						<a href="#">
+							<span><i class="fa fa-credit-card-alt"></i></span>
+							<span>sin stock</span>
+						</a>
+					</li>--%>
+                    <li >
+						<a href="../venta_almacen/Default.aspx">
+							<span><i class="fa fa-pencil"></i></span>
+							<span>Home</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+
+
+				 <form id="form1" runat="server">
+  
+                      
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    
+    </form>
+	
+
+
+
+   
+</body>
+</html>
